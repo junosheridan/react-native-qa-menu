@@ -1,0 +1,1 @@
+# react-native-qa-helper
