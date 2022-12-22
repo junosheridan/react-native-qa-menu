@@ -11,11 +11,11 @@ npm install react-native-qa-menu
 ## Usage
 
 ```js
-import { QaMenuView } from "react-native-qa-menu";
+import { QaMenu } from "react-native-qa-menu";
 
 // ...
 
-<QaMenuView color="tomato" />
+<QaMenu visible />
 ```
 
 ## Contributing

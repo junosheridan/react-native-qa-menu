@@ -1,2 +1,2 @@
-export { default as QaMenuView } from './QaMenuViewNativeComponent';
-export * from './QaMenuViewNativeComponent';
+export * from './qa-menu'
+export * from './types'

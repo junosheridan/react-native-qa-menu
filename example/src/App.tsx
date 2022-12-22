@@ -1,25 +1,24 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import { StyleSheet, View } from 'react-native';
-import { QaMenuView } from 'react-native-qa-menu';
+import { StyleSheet, View } from 'react-native'
+import { QaMenu } from 'react-native-qa-menu'
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <QaMenuView color="#32a852" style={styles.box} />
+      <QaMenu
+        visible
+        customActions={[
+          { title: 'Open Storybook', onPress: () => {} },
+          { title: 'Logout', onPress: () => {} },
+        ]}
+      />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});
+})
