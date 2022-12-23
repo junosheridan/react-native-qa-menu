@@ -12,6 +12,11 @@ export default function App() {
           { title: 'Open Storybook', onPress: () => {} },
           { title: 'Logout', onPress: () => {} },
         ]}
+        reduxState={{
+          array: [1, 2, 3],
+          bool: true,
+          object: { foo: 'bar' },
+        }}
       />
     </View>
   )

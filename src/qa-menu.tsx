@@ -5,6 +5,7 @@ import Draggable from 'react-native-draggable'
 import { Colors, Metrics } from './constants'
 import { SectionAppInfo } from './section-app-info'
 import { SectionCustomActions } from './section-custom-actions'
+import { SectionReduxState } from './section-redux-state'
 import styles from './styles'
 import type { QaMenuProps } from './types'
 
@@ -16,6 +17,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   draggableSize = Metrics.draggableViewSize,
   draggableImageSource,
   customActions,
+  reduxState,
   children,
 }) => {
   const [hasError] = useState(false)
@@ -58,6 +60,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
           </View>
           <ScrollView contentContainerStyle={styles.scrollContent}>
             <SectionAppInfo />
+            <SectionReduxState reduxState={reduxState} />
             <SectionCustomActions customActions={customActions} />
           </ScrollView>
         </SafeAreaView>
