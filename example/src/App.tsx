@@ -8,10 +8,7 @@ export default function App() {
     <View style={styles.container}>
       <QaMenu
         visible
-        customActions={[
-          { title: 'Open Storybook', onPress: () => {} },
-          { title: 'Logout', onPress: () => {} },
-        ]}
+        customActions={[{ title: 'Logout', onPress: () => {} }]}
         reduxState={{
           array: [1, 2, 3],
           bool: true,

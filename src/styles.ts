@@ -12,7 +12,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomColor: Colors.gray,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: Metrics.small,
+    paddingHorizontal: Metrics.tiny,
   },
   scrollContent: {
     paddingHorizontal: Metrics.small,
