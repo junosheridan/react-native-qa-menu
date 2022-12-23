@@ -9,10 +9,18 @@ export default StyleSheet.create({
   header: {
     height: Metrics.headerHeight,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     borderBottomColor: Colors.gray,
     borderBottomWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: Metrics.tiny,
+  },
+  headerTitle: {
+    flex: 1,
+    position: 'absolute',
+    textAlign: 'center',
+    left: Metrics.massive * 1.5,
+    right: Metrics.massive * 1.5,
   },
   scrollContent: {
     paddingHorizontal: Metrics.small,

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, Modal, SafeAreaView, ScrollView, View } from 'react-native'
-import { getVersion } from 'react-native-device-info'
+import { Button, Modal, SafeAreaView, ScrollView, Text, View } from 'react-native'
+import { getApplicationName, getVersion } from 'react-native-device-info'
 import Draggable from 'react-native-draggable'
 import { Colors, Metrics } from './constants'
 import { SectionAppInfo } from './section-app-info'
@@ -34,6 +34,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
     [draggableColor, hasError],
   )
   const appVersion = useMemo(() => getVersion(), [])
+  const appName = useMemo(() => getApplicationName(), [])
   const openModal = useCallback(() => setModalVisible(true), [])
   const closeModal = useCallback(() => setModalVisible(false), [])
   const setViewStateAsDefault = useCallback(() => setViewState(ViewState.default), [])
@@ -104,7 +105,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
             ) : (
               <Button title="Back" onPress={setViewStateAsDefault} />
             )}
-            <View />
+            <Text style={styles.headerTitle}>{appName}</Text>
             {viewState === ViewState.default ? (
               <Button title="Close" onPress={closeModal} />
             ) : (
