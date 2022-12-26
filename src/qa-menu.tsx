@@ -1,13 +1,15 @@
+import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, Modal, SafeAreaView, ScrollView, Text, View } from 'react-native'
 import { getApplicationName, getVersion } from 'react-native-device-info'
 import Draggable from 'react-native-draggable'
-import { Colors, Metrics } from './constants'
+import { AppLogs } from './app-logs'
+import { Colors, MAXIMUM_LOGS_COUNT, Metrics } from './constants'
 import { SectionAppInfo } from './section-app-info'
 import { SectionCustomActions } from './section-custom-actions'
 import { SectionReduxState } from './section-redux-state'
 import styles from './styles'
-import { ViewState, QaMenuProps, LogLevel } from './types'
+import { ViewState, QaMenuProps, LogLevel, Log } from './types'
 
 const originalConsoleLog = console.log
 const originalConsoleDebug = console.debug
@@ -29,6 +31,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   const [viewState, setViewState] = useState(ViewState.default)
   const [hasError] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
+  const [logs, setLogs] = useState<Log[]>([])
   const draggableRenderColor = useMemo(
     () => draggableColor || (hasError ? Colors.error : Colors.success),
     [draggableColor, hasError],
@@ -41,7 +44,6 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   const viewAppLogs = useCallback(() => setViewState(ViewState.logs), [])
 
   const log = useCallback((level: LogLevel, message?: any, ...optionalParams: any[]) => {
-    // setLogs(prevState => [{ level, message: args, date: new Date() }, ...prevState.slice(-100)])
     switch (level) {
       case LogLevel.debug:
         originalConsoleDebug(message, ...optionalParams)
@@ -59,6 +61,10 @@ export const QaMenu: React.FC<QaMenuProps> = ({
         originalConsoleLog(message, ...optionalParams)
         break
     }
+    setLogs(prev => {
+      const updatedLogs = [{ level, message, optionalParams, timestamp: dayjs() }, ...prev]
+      return updatedLogs.slice(0, MAXIMUM_LOGS_COUNT)
+    })
   }, [])
 
   useEffect(() => {
@@ -119,6 +125,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
               <SectionCustomActions customActions={customActions} onAppLogsView={viewAppLogs} />
             </ScrollView>
           )}
+          {viewState === ViewState.logs && <AppLogs data={logs} />}
         </SafeAreaView>
       </Modal>
     </>

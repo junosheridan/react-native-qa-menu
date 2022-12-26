@@ -1,3 +1,4 @@
+import type { Dayjs } from 'dayjs'
 import type { IDraggableProps } from 'react-native-draggable'
 
 export enum LogLevel {
@@ -10,8 +11,9 @@ export enum LogLevel {
 
 export interface Log {
   level: LogLevel
-  message: any
-  date: Date
+  message?: string | null
+  optionalParams?: any[] | null
+  timestamp: Dayjs
 }
 
 export enum ViewState {

@@ -38,3 +38,5 @@ export const Colors = {
   warning: 'yellow',
   error: 'red',
 }
+
+export const MAXIMUM_LOGS_COUNT = 50

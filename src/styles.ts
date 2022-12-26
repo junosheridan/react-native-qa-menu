@@ -58,4 +58,13 @@ export default StyleSheet.create({
   infoDescription: {
     fontSize: 12,
   },
+  logItemContainer: {
+    paddingVertical: Metrics.small,
+    paddingHorizontal: Metrics.xs,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  logItemMessage: {
+    marginVertical: Metrics.tiny,
+    fontSize: 16,
+  },
 })
