@@ -7924,6 +7924,11 @@ react-native-draggable@^3.3.0:
   dependencies:
     prop-types "^15.7.2"
 
+react-native-file-logger@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-file-logger/-/react-native-file-logger-0.4.0.tgz#de6532229d4a7675ece02376e2ecd907ca9bf7ad"
+  integrity sha512-MIXNu56yd+RF55mCnENVFv8wePPdUK8y2eKDFmHtnGp2vs1GwdFmX55x4pO/4pMo2vvs+2HqfQSe8tyMkGh4Tw==
+
 react-native-gradle-plugin@^0.70.3:
   version "0.70.3"
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.70.3.tgz#cbcf0619cbfbddaa9128701aa2d7b4145f9c4fc8"
