@@ -6,13 +6,14 @@ Helper menu for QAs to examine the apps during the development
 
 ```sh
 npm install react-native-qa-menu
+or
+yarn add react-native-qa-menu
 ```
 
 ## Usage
 
 ```js
 import { QaMenu } from "react-native-qa-menu";
-
 // ...
 
 <QaMenu visible />
@@ -27,5 +28,3 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 MIT
 
 ---
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
