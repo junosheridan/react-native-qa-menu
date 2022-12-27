@@ -31,7 +31,8 @@ export default StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    textDecorationLine: 'underline',
+    paddingVertical: Metrics.tiny / 2,
+    backgroundColor: Colors.lavender,
   },
   sectionContent: {
     marginVertical: Metrics.xxs,
@@ -45,6 +46,7 @@ export default StyleSheet.create({
     height: Metrics.buttonHeight,
     paddingHorizontal: Metrics.xs,
     marginVertical: Metrics.xxs,
+    backgroundColor: Colors.white,
   },
   actionButtonTitle: {
     fontSize: 14,
@@ -55,17 +57,32 @@ export default StyleSheet.create({
   infoTitle: {
     fontSize: 14,
     fontWeight: 'bold',
+    color: Colors.midnightBlue,
   },
   infoDescription: {
-    fontSize: 12,
+    fontSize: 14,
+    color: Colors.text,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   logItemContainer: {
     paddingVertical: Metrics.small,
     paddingHorizontal: Metrics.xs,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
+  logItemTimestamp: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
   logItemMessage: {
     marginVertical: Metrics.tiny,
-    fontSize: 16,
+    fontSize: 14,
+  },
+  logItemCopyButton: {
+    height: Metrics.xl,
+    marginVertical: 0,
   },
 })

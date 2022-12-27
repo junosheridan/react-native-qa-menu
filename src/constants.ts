@@ -33,10 +33,14 @@ export const Colors = {
   white: 'white',
   black: 'black',
   gray: 'gray',
+  lavender: 'lavender',
 
-  success: 'green',
-  warning: 'yellow',
-  error: 'red',
+  midnightBlue: 'midnightblue',
+  text: 'dimgrey',
+
+  success: 'forestgreen',
+  warning: 'gold',
+  error: 'crimson',
 }
 
 export const MAXIMUM_LOGS_COUNT = 50

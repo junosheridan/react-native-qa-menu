@@ -4,8 +4,11 @@ import { QaMenu } from 'react-native-qa-menu'
 
 export default function App() {
   React.useEffect(() => {
-    console.log('Hello world')
-    console.log('Hello world', { hello: true, world: 123 })
+    console.log('This is a log message', {
+      array: [1, 2, 3],
+      bool: true,
+      object: { foo: 'bar' },
+    })
     console.error('Error', new Error('This is an error message'))
     console.warn('This is a warning message')
     console.info('This is an info message')
@@ -16,7 +19,7 @@ export default function App() {
       <QaMenu
         visible
         customActions={[{ title: 'Logout', onPress: () => {} }]}
-        reduxState={{
+        state={{
           array: [1, 2, 3],
           bool: true,
           object: { foo: 'bar' },

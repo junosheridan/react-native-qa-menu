@@ -121,7 +121,9 @@
       "@react-native-community",
       "prettier"
     ],
-    "plugins": ["simple-import-sort"],
+    "plugins": [
+      "simple-import-sort"
+    ],
     "rules": {
       "prettier/prettier": [
         "error",
@@ -178,6 +180,7 @@
     "jsSrcsDir": "src"
   },
   "dependencies": {
+    "@react-native-clipboard/clipboard": "^1.11.1",
     "dayjs": "^1.11.7",
     "react-native-device-info": "^10.3.0",
     "react-native-draggable": "^3.3.0",

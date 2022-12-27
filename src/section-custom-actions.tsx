@@ -6,10 +6,11 @@ import type { QaMenuProps } from './types'
 
 export const ActionButton: React.FC<TouchableOpacityProps & { title?: string }> = ({
   title,
+  style,
   ...rest
 }) => {
   return (
-    <TouchableOpacity {...rest} style={styles.actionButton}>
+    <TouchableOpacity {...rest} style={[styles.actionButton, style]}>
       <Text style={styles.actionButtonTitle}>{title}</Text>
     </TouchableOpacity>
   )

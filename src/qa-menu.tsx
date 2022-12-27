@@ -3,12 +3,13 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, Modal, SafeAreaView, ScrollView, Text, View } from 'react-native'
 import { getApplicationName, getVersion } from 'react-native-device-info'
 import Draggable from 'react-native-draggable'
+import { FileLogger } from 'react-native-file-logger'
 
 import { AppLogs } from './app-logs'
 import { Colors, MAXIMUM_LOGS_COUNT, Metrics } from './constants'
 import { SectionAppInfo } from './section-app-info'
 import { SectionCustomActions } from './section-custom-actions'
-import { SectionReduxState } from './section-redux-state'
+import { SectionStateTree } from './section-state-tree'
 import styles from './styles'
 import { Log, LogLevel, QaMenuProps, ViewState } from './types'
 
@@ -26,7 +27,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   draggableSize = Metrics.draggableViewSize,
   draggableImageSource,
   customActions,
-  reduxState,
+  state,
   children,
 }) => {
   const [viewState, setViewState] = useState(ViewState.default)
@@ -68,7 +69,13 @@ export const QaMenu: React.FC<QaMenuProps> = ({
     })
   }, [])
 
+  const sendLogFilesByEmail = useCallback(
+    () => FileLogger.sendLogFilesByEmail({ subject: `${appName}'s Log Files` }),
+    [appName],
+  )
+
   useEffect(() => {
+    FileLogger.configure()
     console.log = (message?: any, ...optionalParams: any[]) =>
       log(LogLevel.log, message, ...optionalParams)
     console.debug = (message?: any, ...optionalParams: any[]) =>
@@ -116,13 +123,13 @@ export const QaMenu: React.FC<QaMenuProps> = ({
             {viewState === ViewState.default ? (
               <Button title="Close" onPress={closeModal} />
             ) : (
-              <View />
+              <Button title="Email Logs" onPress={sendLogFilesByEmail} />
             )}
           </View>
           {viewState === ViewState.default && (
             <ScrollView contentContainerStyle={styles.scrollContent}>
               <SectionAppInfo />
-              <SectionReduxState reduxState={reduxState} />
+              <SectionStateTree state={state} />
               <SectionCustomActions customActions={customActions} onAppLogsView={viewAppLogs} />
             </ScrollView>
           )}
