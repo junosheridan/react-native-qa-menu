@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { FlatList, FlatListProps, ListRenderItemInfo, Text, View } from 'react-native'
 import JSONTree from 'react-native-json-tree'
+
 import { Colors } from './constants'
 import styles from './styles'
 import { Log, LogLevel } from './types'

@@ -3,13 +3,14 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Button, Modal, SafeAreaView, ScrollView, Text, View } from 'react-native'
 import { getApplicationName, getVersion } from 'react-native-device-info'
 import Draggable from 'react-native-draggable'
+
 import { AppLogs } from './app-logs'
 import { Colors, MAXIMUM_LOGS_COUNT, Metrics } from './constants'
 import { SectionAppInfo } from './section-app-info'
 import { SectionCustomActions } from './section-custom-actions'
 import { SectionReduxState } from './section-redux-state'
 import styles from './styles'
-import { ViewState, QaMenuProps, LogLevel, Log } from './types'
+import { Log, LogLevel, QaMenuProps, ViewState } from './types'
 
 const originalConsoleLog = console.log
 const originalConsoleDebug = console.debug

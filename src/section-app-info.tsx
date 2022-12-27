@@ -7,6 +7,7 @@ import {
   getSystemVersion,
   getVersion,
 } from 'react-native-device-info'
+
 import styles from './styles'
 import type { QaMenuProps } from './types'
 

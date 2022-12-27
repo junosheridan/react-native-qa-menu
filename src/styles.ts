@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+
 import { Colors, Metrics } from './constants'
 
 export default StyleSheet.create({
