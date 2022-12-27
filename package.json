@@ -30,6 +30,7 @@
     "test": "jest",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "lint:fix": "yarn lint --fix",
     "prepack": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
@@ -37,9 +38,9 @@
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build"
   },
   "keywords": [
-    "react-native",
-    "ios",
-    "android"
+    "react-native-qa-menu",
+    "qa helper menu",
+    "debug menu"
   ],
   "repository": "https://github.com/junosheridan/react-native-qa-menu",
   "author": "Juno Sheridan <juno.sheridan@gmail.com> (https://junosheridan.github.io)",
@@ -52,8 +53,8 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@evilmartians/lefthook": "^1.2.2",
     "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.2.2",
     "@react-native-community/eslint-config": "^3.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",
@@ -64,6 +65,7 @@
     "eslint": "^8.4.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
     "jest": "^28.1.1",
     "pod-install": "^0.1.0",
     "prettier": "^2.0.5",
@@ -119,6 +121,9 @@
       "@react-native-community",
       "prettier"
     ],
+    "plugins": [
+      "simple-import-sort"
+    ],
     "rules": {
       "prettier/prettier": [
         "error",
@@ -126,10 +131,17 @@
           "quoteProps": "consistent",
           "singleQuote": true,
           "tabWidth": 2,
-          "trailingComma": "es5",
-          "useTabs": false
+          "useTabs": false,
+          "bracketSameLine": false,
+          "bracketSpacing": true,
+          "semi": false,
+          "trailingComma": "all",
+          "arrowParens": "avoid",
+          "printWidth": 100
         }
-      ]
+      ],
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error"
     }
   },
   "eslintIgnore": [
@@ -140,8 +152,13 @@
     "quoteProps": "consistent",
     "singleQuote": true,
     "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
+    "useTabs": false,
+    "bracketSameLine": false,
+    "bracketSpacing": true,
+    "semi": false,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "printWidth": 100
   },
   "react-native-builder-bob": {
     "source": "src",
@@ -161,5 +178,13 @@
     "name": "RNQaMenuViewSpec",
     "type": "components",
     "jsSrcsDir": "src"
+  },
+  "dependencies": {
+    "@react-native-clipboard/clipboard": "^1.11.1",
+    "dayjs": "^1.11.7",
+    "react-native-device-info": "^10.3.0",
+    "react-native-draggable": "^3.3.0",
+    "react-native-file-logger": "^0.4.0",
+    "react-native-json-tree": "^1.3.0"
   }
 }
