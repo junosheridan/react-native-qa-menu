@@ -20,7 +20,18 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data = [] 
       backgroundColor = Colors.error
     }
 
-    const onCopyButtonPress = () => copyToClipboard({ message, optionalParams })
+    const onCopyButtonPress = () => {
+      let copiedMessage = message
+      let copiedParams = optionalParams || {}
+      if (message instanceof Error) {
+        copiedMessage = message.message
+        copiedParams = {
+          cause: message.cause,
+          stack: message.stack,
+        }
+      }
+      copyToClipboard({ message: copiedMessage, params: copiedParams })
+    }
 
     return (
       <View style={[styles.logItemContainer, { backgroundColor }]}>
@@ -28,11 +39,24 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data = [] 
           <Text style={[styles.logItemTimestamp, { color: textColor }]}>
             {timestamp.format('DD MMM YYYY | h:mm:ss.SSS A')}
           </Text>
-          <ActionButton style={styles.logItemCopyButton} title="Copy" onPress={onCopyButtonPress} />
+          <ActionButton
+            style={styles.logItemCopyButton}
+            title="Copy to clipboard"
+            onPress={onCopyButtonPress}
+          />
         </View>
-        {message && <Text style={[styles.logItemMessage, { color: textColor }]}>{message}</Text>}
+        {typeof message === 'string' && (
+          <Text style={[styles.logItemMessageText, { color: textColor }]}>{message}</Text>
+        )}
+        {typeof message === 'object' && (
+          <View style={styles.logItemMessageData}>
+            <JSONTree data={message} shouldExpandNode={() => false} />
+          </View>
+        )}
         {optionalParams?.map((p, index) => {
-          return <JSONTree key={`${index}_${Math.random()}`} data={p} hideRoot />
+          return (
+            <JSONTree key={`${index}_${Math.random()}`} data={p} shouldExpandNode={() => false} />
+          )
         })}
       </View>
     )

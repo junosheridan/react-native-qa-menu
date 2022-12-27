@@ -11,7 +11,7 @@ export enum LogLevel {
 
 export interface Log {
   level: LogLevel
-  message?: string | null
+  message?: any | null
   optionalParams?: any[] | null
   timestamp: Dayjs
 }

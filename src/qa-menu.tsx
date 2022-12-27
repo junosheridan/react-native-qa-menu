@@ -31,7 +31,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   children,
 }) => {
   const [viewState, setViewState] = useState(ViewState.default)
-  const [hasError] = useState(false)
+  const [hasError, setHasError] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [logs, setLogs] = useState<Log[]>([])
   const draggableRenderColor = useMemo(
@@ -43,7 +43,10 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   const openModal = useCallback(() => setModalVisible(true), [])
   const closeModal = useCallback(() => setModalVisible(false), [])
   const setViewStateAsDefault = useCallback(() => setViewState(ViewState.default), [])
-  const viewAppLogs = useCallback(() => setViewState(ViewState.logs), [])
+  const viewAppLogs = useCallback(() => {
+    setHasError(false)
+    setViewState(ViewState.logs)
+  }, [])
 
   const log = useCallback((level: LogLevel, message?: any, ...optionalParams: any[]) => {
     switch (level) {
@@ -54,6 +57,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
         originalConsoleWarn(message, ...optionalParams)
         break
       case LogLevel.error:
+        setHasError(true)
         originalConsoleError(message, ...optionalParams)
         break
       case LogLevel.info:
@@ -75,6 +79,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   )
 
   useEffect(() => {
+    FileLogger.deleteLogFiles()
     FileLogger.configure()
     console.log = (message?: any, ...optionalParams: any[]) =>
       log(LogLevel.log, message, ...optionalParams)
@@ -103,9 +108,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
         y={Metrics.screenHeight - draggableSize * 2}
         renderText={draggableDisplayText || appVersion}
         onShortPressRelease={openModal}
-      >
-        {children}
-      </Draggable>
+      />
       <Modal
         animationType="slide"
         transparent={false}
@@ -131,6 +134,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
               <SectionAppInfo />
               <SectionStateTree state={state} />
               <SectionCustomActions customActions={customActions} onAppLogsView={viewAppLogs} />
+              {children}
             </ScrollView>
           )}
           {viewState === ViewState.logs && <AppLogs data={logs} />}

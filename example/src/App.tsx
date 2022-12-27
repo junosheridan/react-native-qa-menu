@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { QaMenu } from 'react-native-qa-menu'
 
 export default function App() {
@@ -9,7 +9,12 @@ export default function App() {
       bool: true,
       object: { foo: 'bar' },
     })
-    console.error('Error', new Error('This is an error message'))
+    console.log({
+      array: [1, 2, 3],
+      bool: true,
+      object: { foo: 'bar' },
+    })
+    console.error(new Error('This is an error message'))
     console.warn('This is a warning message')
     console.info('This is an info message')
     console.debug('This is a debug message')
@@ -24,7 +29,11 @@ export default function App() {
           bool: true,
           object: { foo: 'bar' },
         }}
-      />
+      >
+        <View style={styles.customSection}>
+          <Text>This is another section rendered as children prop</Text>
+        </View>
+      </QaMenu>
     </View>
   )
 }
@@ -32,5 +41,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  customSection: {
+    marginTop: 24,
   },
 })

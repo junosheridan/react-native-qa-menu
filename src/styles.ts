@@ -77,12 +77,16 @@ export default StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
-  logItemMessage: {
-    marginVertical: Metrics.tiny,
+  logItemMessageText: {
+    marginVertical: Metrics.xxs,
     fontSize: 14,
+  },
+  logItemMessageData: {
+    marginTop: Metrics.xxs,
   },
   logItemCopyButton: {
     height: Metrics.xl,
     marginVertical: 0,
+    paddingHorizontal: Metrics.xxs,
   },
 })

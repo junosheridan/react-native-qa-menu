@@ -43,4 +43,4 @@ export const Colors = {
   error: 'crimson',
 }
 
-export const MAXIMUM_LOGS_COUNT = 50
+export const MAXIMUM_LOGS_COUNT = 100

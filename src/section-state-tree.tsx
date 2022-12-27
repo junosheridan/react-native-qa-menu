@@ -10,7 +10,7 @@ export const SectionStateTree: React.FC<Pick<QaMenuProps, 'state'>> = ({ state }
   if (!state) return null
   return (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{'State Tree'}</Text>
+      <Text style={styles.sectionTitle}>{'App State Tree'}</Text>
       <View style={styles.sectionContent}>
         <JSONTree data={jsonTreeData} hideRoot />
       </View>
