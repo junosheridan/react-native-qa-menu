@@ -50,7 +50,7 @@
   },
   "homepage": "https://github.com/junosheridan/react-native-qa-menu#readme",
   "publishConfig": {
-    "registry": "https://www.npmjs.com/"
+    "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
