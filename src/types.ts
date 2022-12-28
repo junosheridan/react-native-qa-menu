@@ -21,7 +21,7 @@ export enum ViewState {
   logs,
 }
 
-export interface MenuAction {
+export interface QuickAction {
   title: string
   onPress: () => void
 }
@@ -37,7 +37,7 @@ export interface QaMenuProps extends Pick<IDraggableProps, 'isCircle'> {
   draggableColor?: string
   draggableSize?: number
   draggableImageSource?: number
-  customActions?: MenuAction[]
+  quickActions?: QuickAction[]
   extraAppInfo?: AppInfo[]
   state?: any
 }

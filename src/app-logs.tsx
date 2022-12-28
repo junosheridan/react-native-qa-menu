@@ -3,7 +3,7 @@ import { FlatList, FlatListProps, ListRenderItemInfo, Text, View } from 'react-n
 import JSONTree from 'react-native-json-tree'
 
 import { Colors } from './constants'
-import { ActionButton } from './section-custom-actions'
+import { ActionButton } from './section-quick-actions'
 import styles from './styles'
 import { Log, LogLevel } from './types'
 import { copyToClipboard } from './utils'

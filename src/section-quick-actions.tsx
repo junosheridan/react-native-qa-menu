@@ -16,16 +16,15 @@ export const ActionButton: React.FC<TouchableOpacityProps & { title?: string }> 
   )
 }
 
-export const SectionCustomActions: React.FC<
-  Pick<QaMenuProps, 'customActions'> & { onAppLogsView: () => void }
-> = ({ customActions = [], onAppLogsView }) => {
-  if (customActions.length === 0) return null
+export const SectionQuickActions: React.FC<
+  Pick<QaMenuProps, 'quickActions'> & { onAppLogsView: () => void }
+> = ({ quickActions = [], onAppLogsView }) => {
   return (
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>{'Quick Actions'}</Text>
       <View style={styles.sectionContent}>
         <ActionButton title={'View app logs'} onPress={onAppLogsView} />
-        {customActions.map(({ title, onPress }, index) => {
+        {quickActions.map(({ title, onPress }, index) => {
           return <ActionButton key={`action_button_${index}`} title={title} onPress={onPress} />
         })}
       </View>

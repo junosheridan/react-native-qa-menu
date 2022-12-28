@@ -8,7 +8,7 @@ import { FileLogger } from 'react-native-file-logger'
 import { AppLogs } from './app-logs'
 import { Colors, MAXIMUM_LOGS_COUNT, Metrics } from './constants'
 import { SectionAppInfo } from './section-app-info'
-import { SectionCustomActions } from './section-custom-actions'
+import { SectionQuickActions } from './section-quick-actions'
 import { SectionStateTree } from './section-state-tree'
 import styles from './styles'
 import { Log, LogLevel, QaMenuProps, ViewState } from './types'
@@ -26,7 +26,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   draggableColor,
   draggableSize = Metrics.draggableViewSize,
   draggableImageSource,
-  customActions,
+  quickActions,
   state,
   children,
 }) => {
@@ -133,7 +133,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
             <ScrollView contentContainerStyle={styles.scrollContent}>
               <SectionAppInfo />
               <SectionStateTree state={state} />
-              <SectionCustomActions customActions={customActions} onAppLogsView={viewAppLogs} />
+              <SectionQuickActions quickActions={quickActions} onAppLogsView={viewAppLogs} />
               {children}
             </ScrollView>
           )}

@@ -47,7 +47,7 @@ export default function App() {
     <View style={styles.container}>
       <QaMenu
         visible
-        customActions={[{ title: 'Logout', onPress: () => {} }]}
+        quickActions={[{ title: 'Logout', onPress: () => {} }]}
         state={{
           array: [1, 2, 3],
           bool: true,
