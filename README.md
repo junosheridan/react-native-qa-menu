@@ -6,8 +6,15 @@ Helper menu for QAs to examine the apps during the development
 
 ```sh
 npm install react-native-qa-menu
-or
+```
+or yarn:
+```sh
 yarn add react-native-qa-menu
+```
+This library needs these dependencies to be installed in your project before you can use it:
+
+```sh
+yarn add @react-native-clipboard/clipboard react-native-device-info react-native-file-logger
 ```
 
 ## Usage
