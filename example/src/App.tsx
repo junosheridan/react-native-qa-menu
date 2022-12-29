@@ -23,12 +23,14 @@ export default function App() {
     <View style={styles.container}>
       <QaMenu
         visible
-        quickActions={[{ title: 'Logout', onPress: () => {} }]}
-        state={{
-          array: [1, 2, 3],
-          bool: true,
-          object: { foo: 'bar' },
-        }}
+        quickActions={[{ title: 'Logout', onPress: () => {}, closedOnPress: true }]}
+        states={[
+          {
+            array: [1, 2, 3],
+            bool: true,
+            object: { foo: 'bar' },
+          },
+        ]}
       >
         <View style={styles.customSection}>
           <Text>This is another section rendered as children prop</Text>

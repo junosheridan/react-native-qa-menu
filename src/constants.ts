@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
 
@@ -9,6 +9,8 @@ export const Images = {
 }
 
 export const Metrics = {
+  isIphone: Platform.OS === 'ios',
+
   screenWidth: width,
   screenHeight: height,
   draggableViewSize: 50,

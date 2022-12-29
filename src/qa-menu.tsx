@@ -1,8 +1,8 @@
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  Button,
   Image,
+  KeyboardAvoidingView,
   Modal,
   SafeAreaView,
   ScrollView,
@@ -37,7 +37,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   draggableImageSource,
   quickActions = [],
   extraAppInfo = [],
-  state,
+  states = [],
   children,
 }) => {
   const [viewState, setViewState] = useState(ViewState.default)
@@ -146,12 +146,23 @@ export const QaMenu: React.FC<QaMenuProps> = ({
             )}
           </View>
           {viewState === ViewState.default && (
-            <ScrollView contentContainerStyle={styles.scrollContent}>
-              <SectionAppInfo extraAppInfo={extraAppInfo} />
-              <SectionStateTree state={state} />
-              <SectionQuickActions quickActions={quickActions} onAppLogsView={viewAppLogs} />
-              {children}
-            </ScrollView>
+            <KeyboardAvoidingView
+              enabled
+              style={styles.keyboardAvoidingView}
+              behavior={Metrics.isIphone ? 'padding' : 'height'}
+              keyboardVerticalOffset={100}
+            >
+              <ScrollView contentContainerStyle={styles.scrollContent}>
+                <SectionAppInfo extraAppInfo={extraAppInfo} />
+                <SectionStateTree states={states} />
+                <SectionQuickActions
+                  quickActions={quickActions}
+                  closeModal={closeModal}
+                  onAppLogsView={viewAppLogs}
+                />
+                {children}
+              </ScrollView>
+            </KeyboardAvoidingView>
           )}
           {viewState === ViewState.logs && <AppLogs data={logs} />}
         </SafeAreaView>

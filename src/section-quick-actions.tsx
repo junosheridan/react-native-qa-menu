@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native'
 
 import styles from './styles'
-import type { QaMenuProps } from './types'
+import type { QaMenuProps, QuickAction } from './types'
 
 export const ActionButton: React.FC<TouchableOpacityProps & { title?: string }> = ({
   title,
@@ -17,15 +17,31 @@ export const ActionButton: React.FC<TouchableOpacityProps & { title?: string }> 
 }
 
 export const SectionQuickActions: React.FC<
-  Pick<QaMenuProps, 'quickActions'> & { onAppLogsView: () => void }
-> = ({ quickActions = [], onAppLogsView }) => {
+  Pick<QaMenuProps, 'quickActions'> & { onAppLogsView: () => void; closeModal: () => void }
+> = ({ quickActions = [], onAppLogsView, closeModal }) => {
+  const onQuickActionPress = useCallback(
+    ({ onPress, closedOnPress = false }: QuickAction) => {
+      onPress()
+      if (closedOnPress) {
+        closeModal()
+      }
+    },
+    [closeModal],
+  )
+
   return (
     <View style={styles.section}>
       <Text style={styles.sectionTitle}>{'Quick Actions'}</Text>
       <View style={styles.sectionContent}>
         <ActionButton title={'View app logs'} onPress={onAppLogsView} />
-        {quickActions.map(({ title, onPress }, index) => {
-          return <ActionButton key={`action_button_${index}`} title={title} onPress={onPress} />
+        {quickActions.map((action, index) => {
+          return (
+            <ActionButton
+              key={`action_button_${index}`}
+              title={action.title}
+              onPress={() => onQuickActionPress(action)}
+            />
+          )
         })}
       </View>
     </View>

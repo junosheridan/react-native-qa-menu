@@ -22,6 +22,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     left: Metrics.massive * 1.5,
     right: Metrics.massive * 1.5,
+    fontSize: 20,
   },
   scrollContent: {
     paddingHorizontal: Metrics.small,
@@ -95,5 +96,10 @@ export default StyleSheet.create({
   icon: {
     height: Metrics.iconSize,
     width: Metrics.iconSize,
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 })

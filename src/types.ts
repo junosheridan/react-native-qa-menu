@@ -40,5 +40,5 @@ export interface QaMenuProps extends Pick<IDraggableProps, 'isCircle'> {
   draggableImageSource?: number
   quickActions?: QuickAction[]
   extraAppInfo?: AppInfo[]
-  state?: any
+  states?: any[]
 }
