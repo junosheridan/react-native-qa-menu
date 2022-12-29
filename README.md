@@ -42,12 +42,14 @@ export default function App() {
     console.warn('This is a warning message')
     console.info('This is an info message')
     console.debug('This is a debug message')
+    console.log(`%c Log message with color`, 'color: rgb(118, 74, 188)', { foo: 'bar' })
   }, [])
+
   return (
     <View style={styles.container}>
       <QaMenu
         visible
-        quickActions={[{ title: 'Logout', onPress: () => {} }]}
+        quickActions={[{ title: 'Logout', onPress: () => {}, closedOnPress: true }]}
         state={{
           array: [1, 2, 3],
           bool: true,
@@ -82,3 +84,5 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 MIT
 
 ---
+
+Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob) <3
