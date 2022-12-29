@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react'
-import { FlatList, FlatListProps, ListRenderItemInfo, Text, View } from 'react-native'
+import React, { useCallback, useMemo, useState } from 'react'
+import { FlatList, FlatListProps, ListRenderItemInfo, Text, TextInput, View } from 'react-native'
 import JSONTree from 'react-native-json-tree'
 
 import { Colors } from './constants'
@@ -8,7 +8,25 @@ import styles from './styles'
 import { Log, LogLevel } from './types'
 import { copyToClipboard } from './utils'
 
-export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data = [] }) => {
+export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data }) => {
+  const [searchText, setSearchText] = useState('')
+
+  const searchedLogs = useMemo(() => {
+    if (data && searchText.length) {
+      const lowercasedSearchText = searchText.toLowerCase()
+      return data.filter(({ message }) => {
+        if (typeof message === 'string') {
+          return message.toLowerCase().includes(lowercasedSearchText)
+        }
+        if (typeof message === 'object') {
+          return JSON.stringify(message).toLowerCase().includes(lowercasedSearchText)
+        }
+        return false
+      })
+    }
+    return data
+  }, [data, searchText])
+
   const renderItem = useCallback(({ item }: ListRenderItemInfo<Log>) => {
     const { timestamp, level, message, optionalParams = {} } = item
     const textColor = level === LogLevel.error ? Colors.white : Colors.black
@@ -63,10 +81,22 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data = [] 
   }, [])
 
   return (
-    <FlatList
-      keyExtractor={item => `${item.timestamp.valueOf()}_${Math.random()}`}
-      data={data}
-      renderItem={renderItem}
-    />
+    <>
+      <TextInput
+        style={styles.searchInput}
+        allowFontScaling={false}
+        placeholder="Search logs"
+        clearButtonMode="while-editing"
+        value={searchText}
+        onChangeText={setSearchText}
+        autoCapitalize="none"
+        autoCorrect={false}
+      />
+      <FlatList
+        keyExtractor={item => `${item.timestamp.valueOf()}_${Math.random()}`}
+        data={searchedLogs}
+        renderItem={renderItem}
+      />
+    </>
   )
 }

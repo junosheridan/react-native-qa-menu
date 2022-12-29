@@ -102,4 +102,9 @@ export default StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
   },
+  searchInput: {
+    height: Metrics.headerHeight,
+    paddingHorizontal: Metrics.xs,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
 })
