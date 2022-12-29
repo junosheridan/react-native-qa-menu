@@ -24,6 +24,7 @@ export enum ViewState {
 export interface QuickAction {
   title: string
   onPress: () => void
+  closedOnPress?: boolean
 }
 
 export interface AppInfo {

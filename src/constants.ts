@@ -2,6 +2,12 @@ import { Dimensions } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
 
+export const Images = {
+  emailSend: require('./assets/images/email-send.png'),
+  goBack: require('./assets/images/go-back.png'),
+  cancel: require('./assets/images/cancel.png'),
+}
+
 export const Metrics = {
   screenWidth: width,
   screenHeight: height,
@@ -21,6 +27,8 @@ export const Metrics = {
   xxl: 32,
   huge: 48,
   massive: 64,
+
+  iconSize: 24,
 
   borderRadiusXSmall: 2,
   borderRadiusSmall: 4,

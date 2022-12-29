@@ -89,4 +89,11 @@ export default StyleSheet.create({
     marginVertical: 0,
     paddingHorizontal: Metrics.xxs,
   },
+  headerMenuButton: {
+    marginHorizontal: Metrics.xxs,
+  },
+  icon: {
+    height: Metrics.iconSize,
+    width: Metrics.iconSize,
+  },
 })

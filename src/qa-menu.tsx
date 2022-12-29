@@ -1,12 +1,21 @@
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { Button, Modal, SafeAreaView, ScrollView, Text, View } from 'react-native'
+import {
+  Button,
+  Image,
+  Modal,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import { getApplicationName, getVersion } from 'react-native-device-info'
 import Draggable from 'react-native-draggable'
 import { FileLogger } from 'react-native-file-logger'
 
 import { AppLogs } from './app-logs'
-import { Colors, MAXIMUM_LOGS_COUNT, Metrics } from './constants'
+import { Colors, Images, MAXIMUM_LOGS_COUNT, Metrics } from './constants'
 import { SectionAppInfo } from './section-app-info'
 import { SectionQuickActions } from './section-quick-actions'
 import { SectionStateTree } from './section-state-tree'
@@ -121,13 +130,19 @@ export const QaMenu: React.FC<QaMenuProps> = ({
             {viewState === ViewState.default ? (
               <View />
             ) : (
-              <Button title="Back" onPress={setViewStateAsDefault} />
+              <TouchableOpacity style={styles.headerMenuButton} onPress={setViewStateAsDefault}>
+                <Image style={styles.icon} source={Images.goBack} resizeMode="contain" />
+              </TouchableOpacity>
             )}
             <Text style={styles.headerTitle}>{appName}</Text>
             {viewState === ViewState.default ? (
-              <Button title="Close" onPress={closeModal} />
+              <TouchableOpacity style={styles.headerMenuButton} onPress={closeModal}>
+                <Image style={styles.icon} source={Images.cancel} resizeMode="contain" />
+              </TouchableOpacity>
             ) : (
-              <Button title="Email Logs" onPress={sendLogFilesByEmail} />
+              <TouchableOpacity style={styles.headerMenuButton} onPress={sendLogFilesByEmail}>
+                <Image style={styles.icon} source={Images.emailSend} resizeMode="contain" />
+              </TouchableOpacity>
             )}
           </View>
           {viewState === ViewState.default && (
