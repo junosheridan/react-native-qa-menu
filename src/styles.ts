@@ -22,7 +22,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     left: Metrics.massive * 1.5,
     right: Metrics.massive * 1.5,
-    fontSize: 20,
+    fontSize: 18,
   },
   scrollContent: {
     paddingHorizontal: Metrics.small,

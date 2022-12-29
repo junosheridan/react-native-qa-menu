@@ -134,7 +134,9 @@ export const QaMenu: React.FC<QaMenuProps> = ({
                 <Image style={styles.icon} source={Images.goBack} resizeMode="contain" />
               </TouchableOpacity>
             )}
-            <Text style={styles.headerTitle}>{appName}</Text>
+            <Text style={styles.headerTitle} numberOfLines={1}>
+              {appName}
+            </Text>
             {viewState === ViewState.default ? (
               <TouchableOpacity style={styles.headerMenuButton} onPress={closeModal}>
                 <Image style={styles.icon} source={Images.cancel} resizeMode="contain" />
