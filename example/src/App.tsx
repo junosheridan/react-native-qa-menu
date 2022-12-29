@@ -19,18 +19,17 @@ export default function App() {
     console.info('This is an info message')
     console.debug('This is a debug message')
   }, [])
+
   return (
     <View style={styles.container}>
       <QaMenu
         visible
         quickActions={[{ title: 'Logout', onPress: () => {}, closedOnPress: true }]}
-        states={[
-          {
-            array: [1, 2, 3],
-            bool: true,
-            object: { foo: 'bar' },
-          },
-        ]}
+        state={{
+          array: [1, 2, 3],
+          bool: true,
+          object: { foo: 'bar' },
+        }}
       >
         <View style={styles.customSection}>
           <Text>This is another section rendered as children prop</Text>

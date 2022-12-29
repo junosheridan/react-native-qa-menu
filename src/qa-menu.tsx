@@ -37,7 +37,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   draggableImageSource,
   quickActions = [],
   extraAppInfo = [],
-  states = [],
+  state,
   children,
 }) => {
   const [viewState, setViewState] = useState(ViewState.default)
@@ -154,7 +154,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
             >
               <ScrollView contentContainerStyle={styles.scrollContent}>
                 <SectionAppInfo extraAppInfo={extraAppInfo} />
-                <SectionStateTree states={states} />
+                <SectionStateTree state={state} />
                 <SectionQuickActions
                   quickActions={quickActions}
                   closeModal={closeModal}
