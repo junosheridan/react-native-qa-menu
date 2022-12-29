@@ -35,6 +35,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   draggableColor,
   draggableSize = Metrics.draggableViewSize,
   draggableImageSource,
+  maxLogsCount = MAXIMUM_LOGS_COUNT,
   quickActions = [],
   extraAppInfo = [],
   state,
@@ -58,30 +59,33 @@ export const QaMenu: React.FC<QaMenuProps> = ({
     setViewState(ViewState.logs)
   }, [])
 
-  const log = useCallback((level: LogLevel, message?: any, ...optionalParams: any[]) => {
-    switch (level) {
-      case LogLevel.debug:
-        originalConsoleDebug(message, ...optionalParams)
-        break
-      case LogLevel.warn:
-        originalConsoleWarn(message, ...optionalParams)
-        break
-      case LogLevel.error:
-        setHasError(true)
-        originalConsoleError(message, ...optionalParams)
-        break
-      case LogLevel.info:
-        originalConsoleInfo(message, ...optionalParams)
-        break
-      default:
-        originalConsoleLog(message, ...optionalParams)
-        break
-    }
-    setLogs(prev => {
-      const updatedLogs = [{ level, message, optionalParams, timestamp: dayjs() }, ...prev]
-      return updatedLogs.slice(0, MAXIMUM_LOGS_COUNT)
-    })
-  }, [])
+  const log = useCallback(
+    (level: LogLevel, message?: any, ...optionalParams: any[]) => {
+      switch (level) {
+        case LogLevel.debug:
+          originalConsoleDebug(message, ...optionalParams)
+          break
+        case LogLevel.warn:
+          originalConsoleWarn(message, ...optionalParams)
+          break
+        case LogLevel.error:
+          setHasError(true)
+          originalConsoleError(message, ...optionalParams)
+          break
+        case LogLevel.info:
+          originalConsoleInfo(message, ...optionalParams)
+          break
+        default:
+          originalConsoleLog(message, ...optionalParams)
+          break
+      }
+      setLogs(prev => {
+        const updatedLogs = [{ level, message, optionalParams, timestamp: dayjs() }, ...prev]
+        return updatedLogs.slice(0, Math.max(maxLogsCount, MAXIMUM_LOGS_COUNT))
+      })
+    },
+    [maxLogsCount],
+  )
 
   const sendLogFilesByEmail = useCallback(
     () => FileLogger.sendLogFilesByEmail({ subject: `${appName}'s Log Files` }),
