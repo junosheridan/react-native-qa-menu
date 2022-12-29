@@ -18,6 +18,7 @@ export default function App() {
     console.warn('This is a warning message')
     console.info('This is an info message')
     console.debug('This is a debug message')
+    console.log(`%c Log message with color`, 'color: rgb(118, 74, 188)', { foo: 'bar' })
   }, [])
 
   return (

@@ -10,7 +10,7 @@ import { copyToClipboard } from './utils'
 
 export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data = [] }) => {
   const renderItem = useCallback(({ item }: ListRenderItemInfo<Log>) => {
-    const { timestamp, level, message, optionalParams } = item
+    const { timestamp, level, message, optionalParams = {} } = item
     const textColor = level === LogLevel.error ? Colors.white : Colors.black
 
     let backgroundColor = Colors.white
@@ -22,7 +22,7 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data = [] 
 
     const onCopyButtonPress = () => {
       let copiedMessage = message
-      let copiedParams = optionalParams || {}
+      let copiedParams = optionalParams
       if (message instanceof Error) {
         copiedMessage = message.message
         copiedParams = {
@@ -46,18 +46,18 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data = [] 
           />
         </View>
         {typeof message === 'string' && (
-          <Text style={[styles.logItemMessageText, { color: textColor }]}>{message}</Text>
+          <Text style={[styles.logItemMessageText, { color: textColor }]}>
+            {message.replaceAll('%c', '').trim()}
+          </Text>
         )}
         {typeof message === 'object' && (
           <View style={styles.logItemMessageData}>
             <JSONTree data={message} shouldExpandNode={() => false} />
           </View>
         )}
-        {optionalParams?.map((p, index) => {
-          return (
-            <JSONTree key={`${index}_${Math.random()}`} data={p} shouldExpandNode={() => false} />
-          )
-        })}
+        {optionalParams && Object.keys(optionalParams).length > 0 && (
+          <JSONTree data={optionalParams} shouldExpandNode={() => false} />
+        )}
       </View>
     )
   }, [])
