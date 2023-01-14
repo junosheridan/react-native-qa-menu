@@ -37,7 +37,6 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   draggableSize = Metrics.draggableViewSize,
   x = Metrics.screenWidth - Metrics.draggableViewSize * 1.5,
   y = Metrics.screenHeight - Metrics.draggableViewSize * 2,
-  draggableImageSource,
   maxLogsCount = MAXIMUM_LOGS_COUNT,
   quickActions = [],
   extraAppInfo = [],
@@ -132,7 +131,6 @@ export const QaMenu: React.FC<QaMenuProps> = ({
     <>
       <Draggable
         isCircle={isCircle}
-        imageSource={draggableImageSource}
         renderColor={draggableRenderColor}
         renderSize={draggableSize}
         x={x}

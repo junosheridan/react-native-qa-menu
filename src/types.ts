@@ -38,7 +38,6 @@ export interface QaMenuProps extends Pick<IDraggableProps, 'isCircle' | 'x' | 'y
   maxLogsCount?: number
   draggableDisplayText?: string
   draggableSize?: number
-  draggableImageSource?: number
   quickActions?: QuickAction[]
   extraAppInfo?: AppInfo[]
   state?: any
