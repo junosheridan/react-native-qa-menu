@@ -16,7 +16,7 @@ yarn add react-native-qa-menu
 This library needs these dependencies to be installed in your project before you can use it:
 
 ```sh
-yarn add @react-native-clipboard/clipboard react-native-device-info react-native-file-logger
+yarn add @react-native-clipboard/clipboard react-native-device-info react-native-file-logger react-native-share
 ```
 
 ## Example
@@ -75,6 +75,18 @@ const styles = StyleSheet.create({
 
 ```
 
+## Properties
+|Prop|Type|Required|Default|Description|
+|---|---|---|---|---|
+|visible|boolean|true||Whether to show the menu or not|
+|maxLogsCount|number|false|100|Maximum number of logs shown in app|
+|draggableDisplayText|string|false|<app_version>|Displaying text on the draggable menu|
+|draggableSize|number|false|50|Draggable menu's size|
+|quickActions|Array<{ title: string; onPress: () => void; closedOnPress?: boolean }>|false|[]|Quick actions added to the menu|
+|extraAppInfo|Array<{ title: string; description: string }>|false|[]|Extra app info added to the menu|
+|state|any|false||Any object that we'd like to display in the JSON tree Eg. redux store state, react navigation state, react-query's state|
+|styles|{ sectionTitleStyle?: StyleProp<TextStyle>;<br />infoTitleStyle?: StyleProp<TextStyle>;<br />infoDescriptionStyle?: StyleProp<TextStyle>;<br />quickActionButtonStyle?: StyleProp<ViewStyle>;<br />quickActionButtonTitleStyle?: StyleProp<TextStyle>;<br />logItemTimestampStyle?: StyleProp<TextStyle>;<br />logCopyButtonStyle?: StyleProp<ViewStyle>;<br />logMessageTextStyle?: StyleProp<TextStyle> }|false|{}|Custom styles applied to the elements inside the QA menu|
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
@@ -84,5 +96,3 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 MIT
 
 ---
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob) <3
