@@ -41,6 +41,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   quickActions = [],
   extraAppInfo = [],
   state,
+  styles: propStyles = {},
   children,
 }) => {
   const [viewState, setViewState] = useState(ViewState.default)
@@ -179,18 +180,19 @@ export const QaMenu: React.FC<QaMenuProps> = ({
               keyboardVerticalOffset={100}
             >
               <ScrollView contentContainerStyle={styles.scrollContent}>
-                <SectionAppInfo extraAppInfo={extraAppInfo} />
-                <SectionStateTree state={state} />
+                <SectionAppInfo extraAppInfo={extraAppInfo} styles={propStyles} />
+                <SectionStateTree state={state} styles={propStyles} />
                 <SectionQuickActions
                   quickActions={quickActions}
                   closeModal={closeModal}
                   onAppLogsView={viewAppLogs}
+                  styles={propStyles}
                 />
                 {children}
               </ScrollView>
             </KeyboardAvoidingView>
           )}
-          {viewState === ViewState.logs && <AppLogs data={logs} />}
+          {viewState === ViewState.logs && <AppLogs data={logs} styles={propStyles} />}
         </SafeAreaView>
       </Modal>
     </>

@@ -5,10 +5,13 @@ import JSONTree from 'react-native-json-tree'
 import { Colors } from './constants'
 import { ActionButton } from './section-quick-actions'
 import styles from './styles'
-import { Log, LogLevel } from './types'
+import { Log, LogLevel, QaMenuProps } from './types'
 import { copyToClipboard } from './utils'
 
-export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data }) => {
+export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuProps, 'styles'>> = ({
+  data,
+  styles: propStyles = {},
+}) => {
   const [searchText, setSearchText] = useState('')
 
   const searchedLogs = useMemo(() => {
@@ -27,58 +30,73 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'>> = ({ data }) =>
     return data
   }, [data, searchText])
 
-  const renderItem = useCallback(({ item }: ListRenderItemInfo<Log>) => {
-    const { timestamp, level, message, optionalParams = {} } = item
-    const textColor = level === LogLevel.error ? Colors.white : Colors.black
+  const renderItem = useCallback(
+    ({ item }: ListRenderItemInfo<Log>) => {
+      const { timestamp, level, message, optionalParams = {} } = item
+      const textColor = level === LogLevel.error ? Colors.white : Colors.black
 
-    let backgroundColor = Colors.white
-    if (level === LogLevel.warn) {
-      backgroundColor = Colors.warning
-    } else if (level === LogLevel.error) {
-      backgroundColor = Colors.error
-    }
-
-    const onCopyButtonPress = () => {
-      let copiedMessage = message
-      let copiedParams = optionalParams
-      if (message instanceof Error) {
-        copiedMessage = message.message
-        copiedParams = {
-          cause: message.cause,
-          stack: message.stack,
-        }
+      let backgroundColor = Colors.white
+      if (level === LogLevel.warn) {
+        backgroundColor = Colors.warning
+      } else if (level === LogLevel.error) {
+        backgroundColor = Colors.error
       }
-      copyToClipboard({ message: copiedMessage, params: copiedParams })
-    }
 
-    return (
-      <View style={[styles.logItemContainer, { backgroundColor }]}>
-        <View style={styles.row}>
-          <Text style={[styles.logItemTimestamp, { color: textColor }]}>
-            {timestamp.format('DD MMM YYYY | h:mm:ss.SSS A')}
-          </Text>
-          <ActionButton
-            style={styles.logItemCopyButton}
-            title="Copy to clipboard"
-            onPress={onCopyButtonPress}
-          />
-        </View>
-        {typeof message === 'string' && (
-          <Text style={[styles.logItemMessageText, { color: textColor }]}>
-            {message.replaceAll('%c', '').trim()}
-          </Text>
-        )}
-        {typeof message === 'object' && (
-          <View style={styles.logItemMessageData}>
-            <JSONTree data={message} shouldExpandNode={() => false} />
+      const onCopyButtonPress = () => {
+        let copiedMessage = message
+        let copiedParams = optionalParams
+        if (message instanceof Error) {
+          copiedMessage = message.message
+          copiedParams = {
+            cause: message.cause,
+            stack: message.stack,
+          }
+        }
+        copyToClipboard({ message: copiedMessage, params: copiedParams })
+      }
+
+      return (
+        <View style={[styles.logItemContainer, { backgroundColor }]}>
+          <View style={styles.row}>
+            <Text
+              style={[
+                styles.logItemTimestamp,
+                { color: textColor },
+                propStyles.logItemTimestampStyle,
+              ]}
+            >
+              {timestamp.format('DD MMM YYYY | h:mm:ss.SSS A')}
+            </Text>
+            <ActionButton
+              style={[styles.logItemCopyButton, styles.logItemCopyButton]}
+              title="Copy to clipboard"
+              onPress={onCopyButtonPress}
+            />
           </View>
-        )}
-        {optionalParams && Object.keys(optionalParams).length > 0 && (
-          <JSONTree data={optionalParams} shouldExpandNode={() => false} />
-        )}
-      </View>
-    )
-  }, [])
+          {typeof message === 'string' && (
+            <Text
+              style={[
+                styles.logItemMessageText,
+                { color: textColor },
+                propStyles.logMessageTextStyle,
+              ]}
+            >
+              {message.replaceAll('%c', '').trim()}
+            </Text>
+          )}
+          {typeof message === 'object' && (
+            <View style={styles.logItemMessageData}>
+              <JSONTree data={message} shouldExpandNode={() => false} />
+            </View>
+          )}
+          {optionalParams && Object.keys(optionalParams).length > 0 && (
+            <JSONTree data={optionalParams} shouldExpandNode={() => false} />
+          )}
+        </View>
+      )
+    },
+    [propStyles],
+  )
 
   return (
     <>
