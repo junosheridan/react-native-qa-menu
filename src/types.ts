@@ -33,11 +33,10 @@ export interface AppInfo {
   description: string
 }
 
-export interface QaMenuProps extends Pick<IDraggableProps, 'isCircle'> {
+export interface QaMenuProps extends Pick<IDraggableProps, 'isCircle' | 'x' | 'y'> {
   visible: boolean
   maxLogsCount?: number
   draggableDisplayText?: string
-  draggableColor?: string
   draggableSize?: number
   draggableImageSource?: number
   quickActions?: QuickAction[]

@@ -34,8 +34,9 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   visible,
   isCircle = true,
   draggableDisplayText,
-  draggableColor,
   draggableSize = Metrics.draggableViewSize,
+  x = Metrics.screenWidth - Metrics.draggableViewSize * 1.5,
+  y = Metrics.screenHeight - Metrics.draggableViewSize * 2,
   draggableImageSource,
   maxLogsCount = MAXIMUM_LOGS_COUNT,
   quickActions = [],
@@ -48,10 +49,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   const [hasError, setHasError] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [logs, setLogs] = useState<Log[]>([])
-  const draggableRenderColor = useMemo(
-    () => draggableColor || (hasError ? Colors.error : Colors.success),
-    [draggableColor, hasError],
-  )
+  const draggableRenderColor = useMemo(() => (hasError ? Colors.error : Colors.success), [hasError])
   const appVersion = useMemo(() => getVersion(), [])
   const appName = useMemo(() => getApplicationName(), [])
   const openModal = useCallback(() => setModalVisible(true), [])
@@ -133,14 +131,12 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   return (
     <>
       <Draggable
-        z={9999}
         isCircle={isCircle}
         imageSource={draggableImageSource}
         renderColor={draggableRenderColor}
         renderSize={draggableSize}
-        animatedViewProps={{ height: Metrics.screenHeight }}
-        x={Metrics.screenWidth - draggableSize * 1.5}
-        y={Metrics.screenHeight - draggableSize * 2}
+        x={x}
+        y={y}
         renderText={draggableDisplayText || appVersion}
         onShortPressRelease={openModal}
       />
