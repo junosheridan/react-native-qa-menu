@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import {
+  Alert,
   Image,
   KeyboardAvoidingView,
   Modal,
@@ -13,6 +14,7 @@ import {
 import { getApplicationName, getVersion } from 'react-native-device-info'
 import Draggable from 'react-native-draggable'
 import { FileLogger } from 'react-native-file-logger'
+import Share, { ShareOptions } from 'react-native-share'
 
 import { AppLogs } from './app-logs'
 import { Colors, Images, MAXIMUM_LOGS_COUNT, Metrics } from './constants'
@@ -87,14 +89,29 @@ export const QaMenu: React.FC<QaMenuProps> = ({
     [maxLogsCount],
   )
 
-  const sendLogFilesByEmail = useCallback(
-    () => FileLogger.sendLogFilesByEmail({ subject: `${appName}'s Log Files` }),
-    [appName],
-  )
+  const shareLogFiles = useCallback(async () => {
+    const [logFilePath] = await FileLogger.getLogFilePaths()
+    if (logFilePath) {
+      const shareOptions = {
+        title: `Share ${appName}'s Log`,
+        url: Metrics.isIphone ? logFilePath : `file://${logFilePath}`,
+        failOnCancel: false,
+      } satisfies ShareOptions
+      await Share.open(shareOptions)
+    } else {
+      Alert.alert("Log file doesn't exist. Try again later.")
+    }
+  }, [appName])
+
+  const configureFileLogger = useCallback(async () => {
+    await FileLogger.configure({
+      maximumFileSize: 10 * 1024 * 1024, // 10 Mb
+      maximumNumberOfFiles: 1,
+    })
+  }, [])
 
   useEffect(() => {
-    FileLogger.deleteLogFiles()
-    FileLogger.configure()
+    configureFileLogger()
     console.log = (message?: any, ...optionalParams: any[]) =>
       log(LogLevel.log, message, ...optionalParams)
     console.debug = (message?: any, ...optionalParams: any[]) =>
@@ -105,6 +122,9 @@ export const QaMenu: React.FC<QaMenuProps> = ({
       log(LogLevel.warn, message, ...optionalParams)
     console.error = (message?: any, ...optionalParams: any[]) =>
       log(LogLevel.error, message, ...optionalParams)
+    return () => {
+      FileLogger.deleteLogFiles()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -146,7 +166,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
                 <Image style={styles.icon} source={Images.cancel} resizeMode="contain" />
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity style={styles.headerMenuButton} onPress={sendLogFilesByEmail}>
+              <TouchableOpacity style={styles.headerMenuButton} onPress={shareLogFiles}>
                 <Image style={styles.icon} source={Images.emailSend} resizeMode="contain" />
               </TouchableOpacity>
             )}

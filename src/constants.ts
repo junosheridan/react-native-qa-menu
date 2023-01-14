@@ -49,7 +49,7 @@ export const Colors = {
   text: 'dimgrey',
 
   success: 'forestgreen',
-  warning: 'gold',
+  warning: 'lightgoldenrodyellow',
   error: 'crimson',
 }
 

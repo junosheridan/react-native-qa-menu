@@ -75,6 +75,7 @@
     "react-native-builder-bob": "^0.20.0",
     "react-native-device-info": "^10.3.0",
     "react-native-file-logger": "^0.4.0",
+    "react-native-share": "^8.1.0",
     "release-it": "^15.0.0",
     "typescript": "^4.5.2"
   },
@@ -86,7 +87,8 @@
     "react": "*",
     "react-native": "*",
     "react-native-device-info": "^10.3.0",
-    "react-native-file-logger": "^0.4.0"
+    "react-native-file-logger": "^0.4.0",
+    "react-native-share": "^8.1.0"
   },
   "engines": {
     "node": ">= 16.0.0"

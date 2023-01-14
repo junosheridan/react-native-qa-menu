@@ -305,7 +305,7 @@ PODS:
   - React-jsinspector (0.70.6)
   - React-logger (0.70.6):
     - glog
-  - react-native-qa-menu (0.1.7):
+  - react-native-qa-menu (0.1.8):
     - React-Core
   - React-perflogger (0.70.6)
   - React-RCTActionSheet (0.70.6):
@@ -380,6 +380,8 @@ PODS:
   - RNFileLogger (0.4.0):
     - CocoaLumberjack
     - React
+  - RNShare (8.1.0):
+    - React-Core
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -448,6 +450,7 @@ DEPENDENCIES:
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFileLogger (from `../node_modules/react-native-file-logger`)
+  - RNShare (from `../node_modules/react-native-share`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -544,6 +547,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-device-info"
   RNFileLogger:
     :path: "../node_modules/react-native-file-logger"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -583,7 +588,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b4a65947391c658450151275aa406f2b8263178f
   React-jsinspector: 60769e5a0a6d4b32294a2456077f59d0266f9a8b
   React-logger: 1623c216abaa88974afce404dc8f479406bbc3a0
-  react-native-qa-menu: 687b672c300103788d91b358baac98a606a1cc3c
+  react-native-qa-menu: 33c944be4a20b782e90075e775a5d2f32881bbb0
   React-perflogger: 8c79399b0500a30ee8152d0f9f11beae7fc36595
   React-RCTActionSheet: 7316773acabb374642b926c19aef1c115df5c466
   React-RCTAnimation: 5341e288375451297057391227f691d9b2326c3d
@@ -599,6 +604,7 @@ SPEC CHECKSUMS:
   RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
   RNDeviceInfo: 4701f0bf2a06b34654745053db0ce4cb0c53ada7
   RNFileLogger: 87fc2a50db74403f9a97b4b6731a0177dd8a631a
+  RNShare: 48b3113cd089a2be8ff0515c3ae7a46a4db8a76b
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
