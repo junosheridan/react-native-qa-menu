@@ -84,8 +84,20 @@ const styles = StyleSheet.create({
 |draggableSize|number|false|50|Draggable menu's size|
 |quickActions|Array<{ title: string; onPress: () => void; closedOnPress?: boolean }>|false|[]|Quick actions added to the menu|
 |extraAppInfo|Array<{ title: string; description: string }>|false|[]|Extra app info added to the menu|
-|state|any|false||Any object that we'd like to display in the JSON tree Eg. redux store state, react navigation state, react-query's state|
-|styles|{ sectionTitleStyle?: StyleProp<TextStyle>;<br />infoTitleStyle?: StyleProp<TextStyle>;<br />infoDescriptionStyle?: StyleProp<TextStyle>;<br />quickActionButtonStyle?: StyleProp<ViewStyle>;<br />quickActionButtonTitleStyle?: StyleProp<TextStyle>;<br />logItemTimestampStyle?: StyleProp<TextStyle>;<br />logCopyButtonStyle?: StyleProp<ViewStyle>;<br />logMessageTextStyle?: StyleProp<TextStyle> }|false|{}|Custom styles applied to the elements inside the QA menu|
+|state|any|false|undefined|Any object that we'd like to display in the JSON tree Eg. redux store state, react navigation state, react-query's state|
+|styles|object|false|{}|Custom styles applied to the elements inside the QA menu|
+|styles.headerTitleStyle|TextStyle|false|undefined|Text style applied to the menu header's title|
+|styles.sectionTitleStyle|TextStyle|false|undefined|Text style applied to the section's title|
+|styles.infoTitleStyle|TextStyle|false|undefined|Text style applied to the app info's title|
+|styles.infoDescriptionStyle|TextStyle|false|undefined|Text style applied to the app info's description|
+|styles.quickActionButtonStyle|ViewStyle|false|undefined|View style applied to the quick action button|
+|styles.quickActionButtonTitleStyle|TextStyle|false|undefined|Text style applied to the quick action button's title|
+|styles.logTimestampStyle|TextStyle|false|undefined|Text style applied to the log's timestamp text|
+|styles.logCopyButtonStyle|ViewStyle|false|undefined|View style applied to the log's copy button|
+|styles.logMessageStyle|TextStyle|false|undefined|Text style applied to the log's message text|
+|errorColor|ColorValue|false|"crimson"|Color applied when error state|
+|successColor|ColorValue|false|"forestgreen"|Color applied for normal state|
+|warningColor|ColorValue|false|"lightgoldenrodyellow"|Color applied when warning state|
 
 ## Contributing
 
