@@ -95,11 +95,11 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   const shareLogFiles = useCallback(async () => {
     const [logFilePath] = await FileLogger.getLogFilePaths()
     if (logFilePath) {
-      const shareOptions = {
+      const shareOptions: ShareOptions = {
         title: `Share ${appName}'s Log`,
         url: Metrics.isIphone ? logFilePath : `file://${logFilePath}`,
         failOnCancel: false,
-      } satisfies ShareOptions
+      }
       await Share.open(shareOptions)
     } else {
       Alert.alert("Log file doesn't exist. Try again later.")
