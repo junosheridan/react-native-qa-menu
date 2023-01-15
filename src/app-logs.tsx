@@ -18,7 +18,12 @@ import { copyToClipboard } from './utils'
 
 export const AppLogs: React.FC<
   Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuProps, 'styles' | 'errorColor' | 'warningColor'>
-> = ({ data, styles: propStyles = {}, errorColor, warningColor }) => {
+> = ({
+  data,
+  styles: propStyles = {},
+  errorColor = Colors.error,
+  warningColor = Colors.warning,
+}) => {
   const [searchText, setSearchText] = useState('')
 
   const searchedLogs = useMemo(() => {
@@ -44,9 +49,9 @@ export const AppLogs: React.FC<
 
       let backgroundColor: ColorValue = Colors.white
       if (level === LogLevel.warn) {
-        backgroundColor = warningColor || Colors.warning
+        backgroundColor = warningColor
       } else if (level === LogLevel.error) {
-        backgroundColor = errorColor || Colors.error
+        backgroundColor = errorColor
       }
 
       let params = optionalParams || {}

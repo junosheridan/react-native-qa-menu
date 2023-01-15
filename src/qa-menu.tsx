@@ -43,19 +43,17 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   state,
   styles: propStyles = {},
   children,
-  errorColor,
-  successColor,
+  errorColor = Colors.error,
+  successColor = Colors.success,
 }) => {
   const [viewState, setViewState] = useState(ViewState.default)
   const [hasError, setHasError] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [logs, setLogs] = useState<Log[]>([])
-  const draggableRenderColor = useMemo(() => {
-    if (hasError) {
-      return errorColor || Colors.error
-    }
-    return successColor || Colors.success
-  }, [hasError, errorColor, successColor])
+  const draggableRenderColor = useMemo(
+    () => (hasError ? errorColor : successColor),
+    [hasError, errorColor, successColor],
+  )
   const appVersion = useMemo(() => getVersion(), [])
   const appName = useMemo(() => getApplicationName(), [])
   const openModal = useCallback(() => setModalVisible(true), [])
