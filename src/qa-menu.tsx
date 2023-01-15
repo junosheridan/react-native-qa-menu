@@ -43,12 +43,19 @@ export const QaMenu: React.FC<QaMenuProps> = ({
   state,
   styles: propStyles = {},
   children,
+  errorColor,
+  successColor,
 }) => {
   const [viewState, setViewState] = useState(ViewState.default)
   const [hasError, setHasError] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
   const [logs, setLogs] = useState<Log[]>([])
-  const draggableRenderColor = useMemo(() => (hasError ? Colors.error : Colors.success), [hasError])
+  const draggableRenderColor = useMemo(() => {
+    if (hasError) {
+      return errorColor || Colors.error
+    }
+    return successColor || Colors.success
+  }, [hasError, errorColor, successColor])
   const appVersion = useMemo(() => getVersion(), [])
   const appName = useMemo(() => getApplicationName(), [])
   const openModal = useCallback(() => setModalVisible(true), [])
@@ -131,7 +138,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
     <>
       <Draggable
         isCircle={isCircle}
-        renderColor={draggableRenderColor}
+        renderColor={draggableRenderColor as string}
         renderSize={draggableSize}
         x={x}
         y={y}
@@ -153,7 +160,7 @@ export const QaMenu: React.FC<QaMenuProps> = ({
                 <Image style={styles.icon} source={Images.goBack} resizeMode="contain" />
               </TouchableOpacity>
             )}
-            <Text style={styles.headerTitle} numberOfLines={1}>
+            <Text style={[styles.headerTitle, propStyles.headerTitleStyle]} numberOfLines={1}>
               {appName}
             </Text>
             {viewState === ViewState.default ? (

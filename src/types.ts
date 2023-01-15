@@ -1,5 +1,5 @@
 import type { Dayjs } from 'dayjs'
-import type { StyleProp, TextStyle, ViewStyle } from 'react-native'
+import type { ColorValue, StyleProp, TextStyle, ViewStyle } from 'react-native'
 import type { IDraggableProps } from 'react-native-draggable'
 
 export enum LogLevel {
@@ -42,13 +42,17 @@ export interface QaMenuProps extends Pick<IDraggableProps, 'isCircle' | 'x' | 'y
   extraAppInfo?: AppInfo[]
   state?: any
   styles?: {
+    headerTitleStyle?: StyleProp<TextStyle>
     sectionTitleStyle?: StyleProp<TextStyle>
     infoTitleStyle?: StyleProp<TextStyle>
     infoDescriptionStyle?: StyleProp<TextStyle>
     quickActionButtonStyle?: StyleProp<ViewStyle>
     quickActionButtonTitleStyle?: StyleProp<TextStyle>
-    logItemTimestampStyle?: StyleProp<TextStyle>
+    logTimestampStyle?: StyleProp<TextStyle>
     logCopyButtonStyle?: StyleProp<ViewStyle>
-    logMessageTextStyle?: StyleProp<TextStyle>
+    logMessageStyle?: StyleProp<TextStyle>
   }
+  errorColor?: ColorValue
+  successColor?: ColorValue
+  warningColor?: ColorValue
 }

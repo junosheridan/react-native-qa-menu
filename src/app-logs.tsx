@@ -1,5 +1,13 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { FlatList, FlatListProps, ListRenderItemInfo, Text, TextInput, View } from 'react-native'
+import {
+  ColorValue,
+  FlatList,
+  FlatListProps,
+  ListRenderItemInfo,
+  Text,
+  TextInput,
+  View,
+} from 'react-native'
 import JSONTree from 'react-native-json-tree'
 
 import { Colors } from './constants'
@@ -8,10 +16,9 @@ import styles from './styles'
 import { Log, LogLevel, QaMenuProps } from './types'
 import { copyToClipboard } from './utils'
 
-export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuProps, 'styles'>> = ({
-  data,
-  styles: propStyles = {},
-}) => {
+export const AppLogs: React.FC<
+  Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuProps, 'styles' | 'errorColor' | 'warningColor'>
+> = ({ data, styles: propStyles = {}, errorColor, warningColor }) => {
   const [searchText, setSearchText] = useState('')
 
   const searchedLogs = useMemo(() => {
@@ -33,18 +40,32 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuPro
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<Log>) => {
       const { timestamp, level, message, optionalParams = {} } = item
-      const textColor = level === LogLevel.error ? Colors.white : Colors.black
+      let textColor = level === LogLevel.error ? Colors.white : Colors.black
 
-      let backgroundColor = Colors.white
+      let backgroundColor: ColorValue = Colors.white
       if (level === LogLevel.warn) {
-        backgroundColor = Colors.warning
+        backgroundColor = warningColor || Colors.warning
       } else if (level === LogLevel.error) {
-        backgroundColor = Colors.error
+        backgroundColor = errorColor || Colors.error
+      }
+
+      let params = optionalParams || {}
+      if (Array.isArray(optionalParams)) {
+        params = optionalParams.filter(p => {
+          if (
+            typeof p === 'string' &&
+            (p.includes('rgb') || p.includes('rgba') || /^#[0-9A-F]{6}$/i.test(p))
+          ) {
+            textColor = p
+            return false
+          }
+          return true
+        })
       }
 
       const onCopyButtonPress = () => {
         let copiedMessage = message
-        let copiedParams = optionalParams
+        let copiedParams = params
         if (message instanceof Error) {
           copiedMessage = message.message
           copiedParams = {
@@ -59,27 +80,20 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuPro
         <View style={[styles.logItemContainer, { backgroundColor }]}>
           <View style={styles.row}>
             <Text
-              style={[
-                styles.logItemTimestamp,
-                { color: textColor },
-                propStyles.logItemTimestampStyle,
-              ]}
+              style={[styles.logItemTimestamp, { color: textColor }, propStyles.logTimestampStyle]}
             >
-              {timestamp.format('DD MMM YYYY | h:mm:ss.SSS A')}
+              {`[${LogLevel[level].toUpperCase()}] `}
+              {timestamp.format('h:mm:ss.SSS A')}
             </Text>
             <ActionButton
               style={[styles.logItemCopyButton, styles.logItemCopyButton]}
-              title="Copy to clipboard"
+              title="Copy"
               onPress={onCopyButtonPress}
             />
           </View>
           {typeof message === 'string' && (
             <Text
-              style={[
-                styles.logItemMessageText,
-                { color: textColor },
-                propStyles.logMessageTextStyle,
-              ]}
+              style={[styles.logItemMessageText, { color: textColor }, propStyles.logMessageStyle]}
             >
               {message.replaceAll('%c', '').trim()}
             </Text>
@@ -89,13 +103,13 @@ export const AppLogs: React.FC<Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuPro
               <JSONTree data={message} shouldExpandNode={() => false} />
             </View>
           )}
-          {optionalParams && Object.keys(optionalParams).length > 0 && (
-            <JSONTree data={optionalParams} shouldExpandNode={() => false} />
+          {Object.keys(params).length > 0 && (
+            <JSONTree data={params} shouldExpandNode={() => false} />
           )}
         </View>
       )
     },
-    [propStyles],
+    [propStyles, errorColor, warningColor],
   )
 
   return (
