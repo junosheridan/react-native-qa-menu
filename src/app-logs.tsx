@@ -85,20 +85,20 @@ export const AppLogs: React.FC<
         <View style={[styles.logItemContainer, { backgroundColor }]}>
           <View style={styles.row}>
             <Text
-              style={[styles.logItemTimestamp, { color: textColor }, propStyles.logTimestampStyle]}
+              style={[styles.logItemTimestamp, propStyles.logTimestampStyle, { color: textColor }]}
             >
               {`[${LogLevel[level].toUpperCase()}] `}
               {timestamp.format('h:mm:ss.SSS A')}
             </Text>
             <ActionButton
-              style={[styles.logItemCopyButton, styles.logItemCopyButton]}
+              style={[styles.logItemCopyButton, propStyles.logCopyButtonStyle]}
               title="Copy"
               onPress={onCopyButtonPress}
             />
           </View>
           {typeof message === 'string' && (
             <Text
-              style={[styles.logItemMessageText, { color: textColor }, propStyles.logMessageStyle]}
+              style={[styles.logItemMessageText, propStyles.logMessageStyle, { color: textColor }]}
             >
               {message.replaceAll('%c', '').trim()}
             </Text>
