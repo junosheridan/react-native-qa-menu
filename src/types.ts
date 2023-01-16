@@ -1,4 +1,5 @@
 import type { Dayjs } from 'dayjs'
+import type { PropsWithChildren } from 'react'
 import type { ColorValue, StyleProp, TextStyle, ViewStyle } from 'react-native'
 import type { IDraggableProps } from 'react-native-draggable'
 
@@ -33,7 +34,8 @@ export interface AppInfo {
   description: string
 }
 
-export interface QaMenuProps extends Pick<IDraggableProps, 'isCircle' | 'x' | 'y'> {
+export interface QaMenuProps
+  extends PropsWithChildren<Pick<IDraggableProps, 'isCircle' | 'x' | 'y'>> {
   visible: boolean
   maxLogsCount?: number
   draggableDisplayText?: string
@@ -55,4 +57,9 @@ export interface QaMenuProps extends Pick<IDraggableProps, 'isCircle' | 'x' | 'y
   errorColor?: ColorValue
   successColor?: ColorValue
   warningColor?: ColorValue
+}
+
+export interface QaMenuRefMethods {
+  open: () => void
+  close: () => void
 }

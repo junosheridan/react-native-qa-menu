@@ -4,6 +4,11 @@ import { Colors, Metrics } from './constants'
 
 export default StyleSheet.create({
   container: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
+    zIndex: 9999,
+  },
+  modalContent: {
     flex: 1,
     backgroundColor: Colors.white,
   },
