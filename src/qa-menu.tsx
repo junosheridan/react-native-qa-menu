@@ -150,7 +150,7 @@ export const QaMenu = forwardRef(
 
     if (!visible) return null
     return (
-      <View style={styles.container}>
+      <View style={styles.container} pointerEvents="box-none">
         <Draggable
           isCircle={isCircle}
           renderColor={draggableRenderColor as string}
