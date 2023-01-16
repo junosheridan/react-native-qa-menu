@@ -22,12 +22,14 @@ yarn add @react-native-clipboard/clipboard react-native-device-info react-native
 ## Example
 
 ```js
-import * as React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
-import { QaMenu } from 'react-native-qa-menu'
+import { QaMenu, QaMenuRefMethods } from 'react-native-qa-menu'
 
 export default function App() {
-  React.useEffect(() => {
+  const ref = useRef<QaMenuRefMethods>(null)
+
+  useEffect(() => {
     console.log('This is a log message', {
       array: [1, 2, 3],
       bool: true,
@@ -46,39 +48,37 @@ export default function App() {
   }, [])
 
   return (
-    <View style={styles.container}>
-      <QaMenu
-        visible
-        quickActions={[{ title: 'Logout', onPress: () => {}, closedOnPress: true }]}
-        state={{
-          array: [1, 2, 3],
-          bool: true,
-          object: { foo: 'bar' },
-        }}
-      >
-        <View style={styles.customSection}>
-          <Text>This is another section rendered as children prop</Text>
-        </View>
-      </QaMenu>
-    </View>
+    <QaMenu
+      visible
+      ref={ref}
+      quickActions={[{ title: 'Logout', onPress: () => {}, closedOnPress: true }]}
+      state={{
+        array: [1, 2, 3],
+        bool: true,
+        object: { foo: 'bar' },
+      }}
+    >
+      <View style={styles.customSection}>
+        <Text>This is another section rendered as children prop</Text>
+      </View>
+    </QaMenu>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   customSection: {
     marginTop: 24,
   },
 })
-
 ```
 
 ## Properties
 |Prop|Type|Required|Default|Description|
 |---|---|---|---|---|
 |visible|boolean|true||Whether to show the menu or not|
+|isCircle|boolean|false|true|Display the draggable menu as circle|
+|x|number|false|Screen width - 75|Position x of the draggable menu|
+|y|number|false|Screen height - 100|Position y of the draggable menu|
 |maxLogsCount|number|false|100|Maximum number of logs shown in app|
 |draggableDisplayText|string|false|<app_version>|Displaying text on the draggable menu|
 |draggableSize|number|false|50|Draggable menu's size|
@@ -98,6 +98,12 @@ const styles = StyleSheet.create({
 |errorColor|ColorValue|false|"crimson"|Color applied when error state|
 |successColor|ColorValue|false|"forestgreen"|Color applied for normal state|
 |warningColor|ColorValue|false|"lightgoldenrodyellow"|Color applied when warning state|
+
+## Methods
+|Func|Description|
+|---|---|
+|open|Open the menu's content modal|
+|close|Close the menu's content modal|
 
 ## Contributing
 
