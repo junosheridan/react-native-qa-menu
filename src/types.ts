@@ -57,7 +57,6 @@ export interface QaMenuProps
   errorColor?: ColorValue
   successColor?: ColorValue
   warningColor?: ColorValue
-  shouldExpandLogTree?: boolean
 }
 
 export interface QaMenuRefMethods {

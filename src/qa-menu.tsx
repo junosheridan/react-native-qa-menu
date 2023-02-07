@@ -54,7 +54,6 @@ export const QaMenu = forwardRef(
       styles: propStyles = {},
       errorColor = Colors.error,
       successColor = Colors.success,
-      shouldExpandLogTree = true,
       children,
     }: QaMenuProps,
     ref: Ref<QaMenuRefMethods>,
@@ -209,9 +208,7 @@ export const QaMenu = forwardRef(
                 </ScrollView>
               </KeyboardAvoidingView>
             )}
-            {viewState === ViewState.logs && (
-              <AppLogs data={logs} shouldExpandLogTree={shouldExpandLogTree} styles={propStyles} />
-            )}
+            {viewState === ViewState.logs && <AppLogs data={logs} styles={propStyles} />}
           </SafeAreaView>
         </Modal>
       </View>

@@ -98,7 +98,6 @@ const styles = StyleSheet.create({
 |errorColor|ColorValue|false|"crimson"|Color applied when error state|
 |successColor|ColorValue|false|"forestgreen"|Color applied for normal state|
 |warningColor|ColorValue|false|"lightgoldenrodyellow"|Color applied when warning state|
-|shouldExpandLogTree|boolean|false|true|Whether or not to expand the log tree|
 
 ## Methods
 |Func|Description|
