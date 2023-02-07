@@ -17,12 +17,14 @@ import { Log, LogLevel, QaMenuProps } from './types'
 import { copyToClipboard } from './utils'
 
 export const AppLogs: React.FC<
-  Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuProps, 'styles' | 'errorColor' | 'warningColor'>
+  Pick<FlatListProps<Log>, 'data'> &
+    Pick<QaMenuProps, 'styles' | 'errorColor' | 'warningColor' | 'shouldExpandLogTree'>
 > = ({
   data,
   styles: propStyles = {},
   errorColor = Colors.error,
   warningColor = Colors.warning,
+  shouldExpandLogTree = true,
 }) => {
   const [searchText, setSearchText] = useState('')
 
@@ -105,16 +107,24 @@ export const AppLogs: React.FC<
           )}
           {typeof message === 'object' && (
             <View style={styles.logItemMessageData}>
-              <JSONTree data={message} shouldExpandNode={() => false} />
+              <JSONTree
+                data={message}
+                hideRoot={shouldExpandLogTree}
+                shouldExpandNode={() => shouldExpandLogTree}
+              />
             </View>
           )}
           {Object.keys(params).length > 0 && (
-            <JSONTree data={params} shouldExpandNode={() => false} />
+            <JSONTree
+              data={params}
+              hideRoot={shouldExpandLogTree}
+              shouldExpandNode={() => shouldExpandLogTree}
+            />
           )}
         </View>
       )
     },
-    [propStyles, errorColor, warningColor],
+    [propStyles, errorColor, warningColor, shouldExpandLogTree],
   )
 
   return (
