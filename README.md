@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
 |x|number|false|Screen width - 75|Position x of the draggable menu|
 |y|number|false|Screen height - 100|Position y of the draggable menu|
 |maxLogsCount|number|false|100|Maximum number of logs shown in app|
+|logFilters|string[]|false|[]|Filter out unwanted logs|
 |draggableDisplayText|string|false|<app_version>|Displaying text on the draggable menu|
 |draggableSize|number|false|50|Draggable menu's size|
 |quickActions|Array<{ title: string; onPress: () => void; closedOnPress?: boolean }>|false|[]|Quick actions added to the menu|

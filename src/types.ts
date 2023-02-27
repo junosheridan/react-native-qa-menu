@@ -38,6 +38,7 @@ export interface QaMenuProps
   extends PropsWithChildren<Pick<IDraggableProps, 'isCircle' | 'x' | 'y'>> {
   visible: boolean
   maxLogsCount?: number
+  logFilters?: string[]
   draggableDisplayText?: string
   draggableSize?: number
   quickActions?: QuickAction[]

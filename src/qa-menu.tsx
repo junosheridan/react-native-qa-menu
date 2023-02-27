@@ -48,6 +48,7 @@ export const QaMenu = forwardRef(
       x = Metrics.screenWidth - Metrics.draggableViewSize * 1.5,
       y = Metrics.screenHeight - Metrics.draggableViewSize * 2,
       maxLogsCount = MAXIMUM_LOGS_COUNT,
+      logFilters = [],
       quickActions = [],
       extraAppInfo = [],
       state,
@@ -78,6 +79,12 @@ export const QaMenu = forwardRef(
 
     const log = useCallback(
       (level: LogLevel, message?: any, ...optionalParams: any[]) => {
+        let shouldAddNewLog = true
+        if (typeof message === 'string') {
+          shouldAddNewLog = !logFilters.includes(message)
+        } else if (typeof message === 'object') {
+          shouldAddNewLog = !logFilters.includes(JSON.stringify(message).toLowerCase())
+        }
         switch (level) {
           case LogLevel.debug:
             originalConsoleDebug(message, ...optionalParams)
@@ -86,7 +93,7 @@ export const QaMenu = forwardRef(
             originalConsoleWarn(message, ...optionalParams)
             break
           case LogLevel.error:
-            setHasError(true)
+            setHasError(shouldAddNewLog)
             originalConsoleError(message, ...optionalParams)
             break
           case LogLevel.info:
@@ -96,12 +103,14 @@ export const QaMenu = forwardRef(
             originalConsoleLog(message, ...optionalParams)
             break
         }
-        setLogs(prev => {
-          const updatedLogs = [{ level, message, optionalParams, timestamp: dayjs() }, ...prev]
-          return updatedLogs.slice(0, Math.max(maxLogsCount, MAXIMUM_LOGS_COUNT))
-        })
+        if (shouldAddNewLog) {
+          setLogs(prev => {
+            const updatedLogs = [{ level, message, optionalParams, timestamp: dayjs() }, ...prev]
+            return updatedLogs.slice(0, Math.max(maxLogsCount, MAXIMUM_LOGS_COUNT))
+          })
+        }
       },
-      [maxLogsCount],
+      [maxLogsCount, logFilters],
     )
 
     const shareLogFiles = useCallback(async () => {
