@@ -371,14 +371,14 @@ PODS:
     - React-jsi (= 0.70.6)
     - React-logger (= 0.70.6)
     - React-perflogger (= 0.70.6)
-  - RNCClipboard (1.11.1):
+  - RNCClipboard (1.11.2):
     - React-Core
-  - RNDeviceInfo (10.3.0):
+  - RNDeviceInfo (10.6.0):
     - React-Core
-  - RNFileLogger (0.4.0):
+  - RNFileLogger (0.4.1):
     - CocoaLumberjack
     - React
-  - RNShare (8.1.0):
+  - RNShare (8.2.2):
     - React-Core
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
@@ -595,14 +595,14 @@ SPEC CHECKSUMS:
   React-RCTVibration: c75ceef7aa60a33b2d5731ebe5800ddde40cefc4
   React-runtimeexecutor: 15437b576139df27635400de0599d9844f1ab817
   ReactCommon: 349be31adeecffc7986a0de875d7fb0dcf4e251c
-  RNCClipboard: 2834e1c4af68697089cdd455ee4a4cdd198fa7dd
-  RNDeviceInfo: 4701f0bf2a06b34654745053db0ce4cb0c53ada7
-  RNFileLogger: 87fc2a50db74403f9a97b4b6731a0177dd8a631a
-  RNShare: 48b3113cd089a2be8ff0515c3ae7a46a4db8a76b
+  RNCClipboard: 3f0451a8100393908bea5c5c5b16f96d45f30bfc
+  RNDeviceInfo: 475a4c447168d0ad4c807e48ef5e0963a0f4eb1b
+  RNFileLogger: 9eaf7a6ea709eaaffe646cc485b98ae1dbf1e9f0
+  RNShare: d82e10f6b7677f4b0048c23709bd04098d5aee6c
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 99caf8d5ab45e9d637ee6e0174ec16fbbb01bcfc
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: c11e727206d91f9cdfee945510202295e29f6852
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
