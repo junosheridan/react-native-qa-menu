@@ -180,7 +180,13 @@ export const QaMenu = forwardRef(
 
     const renderAppLogsView = useCallback(() => {
       if (viewState !== ViewState.logs) return null
-      return <AppLogs data={logs} styles={propStyles} />
+      return (
+        <AppLogs
+          data={logs}
+          styles={propStyles}
+          onRefresh={() => setLogs(listOfAllLogsRef.current)}
+        />
+      )
     }, [logs, propStyles, viewState])
 
     useEffect(() => {

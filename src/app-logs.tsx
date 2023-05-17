@@ -17,9 +17,11 @@ import { Log, LogLevel, QaMenuProps } from './types'
 import { copyToClipboard } from './utils'
 
 export const AppLogs: React.FC<
-  Pick<FlatListProps<Log>, 'data'> & Pick<QaMenuProps, 'styles' | 'errorColor' | 'warningColor'>
+  Pick<FlatListProps<Log>, 'data' | 'onRefresh'> &
+    Pick<QaMenuProps, 'styles' | 'errorColor' | 'warningColor'>
 > = ({
   data,
+  onRefresh,
   styles: propStyles = {},
   errorColor = Colors.error,
   warningColor = Colors.warning,
@@ -128,9 +130,11 @@ export const AppLogs: React.FC<
         autoCorrect={false}
       />
       <FlatList
+        refreshing={false}
         keyExtractor={item => `${item.timestamp.valueOf()}_${Math.random()}`}
         data={filteredLogs}
         renderItem={renderItem}
+        onRefresh={onRefresh}
       />
     </>
   )
