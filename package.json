@@ -1,7 +1,7 @@
 {
   "name": "react-native-qa-menu",
   "version": "0.1.19",
-  "description": "test",
+  "description": "Helper menu for QAs to examine the apps during the development",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",

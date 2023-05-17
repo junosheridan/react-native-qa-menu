@@ -26,7 +26,7 @@ export const AppLogs: React.FC<
 }) => {
   const [searchText, setSearchText] = useState('')
 
-  const searchedLogs = useMemo(() => {
+  const filteredLogs = useMemo(() => {
     if (data && searchText.length) {
       const lowercasedSearchText = searchText.toLowerCase()
       return data.filter(({ message }) => {
@@ -129,7 +129,7 @@ export const AppLogs: React.FC<
       />
       <FlatList
         keyExtractor={item => `${item.timestamp.valueOf()}_${Math.random()}`}
-        data={searchedLogs}
+        data={filteredLogs}
         renderItem={renderItem}
       />
     </>

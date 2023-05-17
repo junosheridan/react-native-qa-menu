@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useImperativeHandle,
   useMemo,
+  useRef,
   useState,
 } from 'react'
 import {
@@ -63,6 +64,8 @@ export const QaMenu = forwardRef(
     const [hasError, setHasError] = useState(false)
     const [modalVisible, setModalVisible] = useState(false)
     const [logs, setLogs] = useState<Log[]>([])
+    const listOfAllLogsRef = useRef<Log[]>([])
+
     const draggableRenderColor = useMemo(
       () => (hasError ? errorColor : successColor),
       [hasError, errorColor, successColor],
@@ -71,9 +74,13 @@ export const QaMenu = forwardRef(
     const appName = useMemo(() => getApplicationName(), [])
     const openModal = useCallback(() => setModalVisible(true), [])
     const closeModal = useCallback(() => setModalVisible(false), [])
-    const setViewStateAsDefault = useCallback(() => setViewState(ViewState.default), [])
+    const setViewStateAsDefault = useCallback(() => {
+      setLogs([])
+      setViewState(ViewState.default)
+    }, [])
     const viewAppLogs = useCallback(() => {
       setHasError(false)
+      setLogs(listOfAllLogsRef.current)
       setViewState(ViewState.logs)
     }, [])
 
@@ -104,10 +111,14 @@ export const QaMenu = forwardRef(
             break
         }
         if (shouldAddNewLog) {
-          setLogs(prev => {
-            const updatedLogs = [{ level, message, optionalParams, timestamp: dayjs() }, ...prev]
-            return updatedLogs.slice(0, Math.max(maxLogsCount, MAXIMUM_LOGS_COUNT))
-          })
+          const updatedLogs = [
+            { level, message, optionalParams, timestamp: dayjs() },
+            ...listOfAllLogsRef.current,
+          ]
+          listOfAllLogsRef.current = updatedLogs.slice(
+            0,
+            Math.max(maxLogsCount, MAXIMUM_LOGS_COUNT),
+          )
         }
       },
       [maxLogsCount, logFilters],
@@ -133,6 +144,44 @@ export const QaMenu = forwardRef(
         maximumNumberOfFiles: 1,
       })
     }, [])
+
+    const renderDefaultView = useCallback(() => {
+      if (viewState !== ViewState.default) return null
+      return (
+        <KeyboardAvoidingView
+          enabled
+          style={styles.keyboardAvoidingView}
+          behavior={Metrics.isIphone ? 'padding' : 'height'}
+          keyboardVerticalOffset={100}
+        >
+          <ScrollView contentContainerStyle={styles.scrollContent}>
+            <SectionAppInfo extraAppInfo={extraAppInfo} styles={propStyles} />
+            <SectionStateTree state={state} styles={propStyles} />
+            <SectionQuickActions
+              quickActions={quickActions}
+              closeModal={closeModal}
+              onAppLogsView={viewAppLogs}
+              styles={propStyles}
+            />
+            {children}
+          </ScrollView>
+        </KeyboardAvoidingView>
+      )
+    }, [
+      children,
+      closeModal,
+      extraAppInfo,
+      propStyles,
+      quickActions,
+      state,
+      viewAppLogs,
+      viewState,
+    ])
+
+    const renderAppLogsView = useCallback(() => {
+      if (viewState !== ViewState.logs) return null
+      return <AppLogs data={logs} styles={propStyles} />
+    }, [logs, propStyles, viewState])
 
     useEffect(() => {
       configureFileLogger()
@@ -197,27 +246,8 @@ export const QaMenu = forwardRef(
                 </TouchableOpacity>
               )}
             </View>
-            {viewState === ViewState.default && (
-              <KeyboardAvoidingView
-                enabled
-                style={styles.keyboardAvoidingView}
-                behavior={Metrics.isIphone ? 'padding' : 'height'}
-                keyboardVerticalOffset={100}
-              >
-                <ScrollView contentContainerStyle={styles.scrollContent}>
-                  <SectionAppInfo extraAppInfo={extraAppInfo} styles={propStyles} />
-                  <SectionStateTree state={state} styles={propStyles} />
-                  <SectionQuickActions
-                    quickActions={quickActions}
-                    closeModal={closeModal}
-                    onAppLogsView={viewAppLogs}
-                    styles={propStyles}
-                  />
-                  {children}
-                </ScrollView>
-              </KeyboardAvoidingView>
-            )}
-            {viewState === ViewState.logs && <AppLogs data={logs} styles={propStyles} />}
+            {renderDefaultView()}
+            {renderAppLogsView()}
           </SafeAreaView>
         </Modal>
       </View>
