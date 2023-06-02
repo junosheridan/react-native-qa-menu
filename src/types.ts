@@ -16,6 +16,7 @@ export interface Log {
   message?: any | null
   optionalParams?: any[] | null
   timestamp: Dayjs
+  id: string
 }
 
 export enum ViewState {

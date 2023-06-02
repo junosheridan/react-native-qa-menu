@@ -111,8 +111,15 @@ export const QaMenu = forwardRef(
             break
         }
         if (shouldAddNewLog) {
+          const timestamp = dayjs()
           const updatedLogs = [
-            { level, message, optionalParams, timestamp: dayjs() },
+            {
+              level,
+              message,
+              optionalParams,
+              timestamp,
+              id: `${timestamp.valueOf()}_${Math.random()}`,
+            },
             ...listOfAllLogsRef.current,
           ]
           listOfAllLogsRef.current = updatedLogs.slice(

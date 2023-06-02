@@ -24,7 +24,8 @@
     "release": "release-it",
     "example": "yarn --cwd example",
     "bootstrap": "yarn example && yarn install && yarn example pods",
-    "clean": "del-cli example/android/build example/android/app/build example/ios/build"
+    "clean": "del-cli example/android/build example/android/app/build example/ios/build",
+    "postinstall": "patch-package"
   },
   "keywords": [
     "react-native-qa-menu",
@@ -178,6 +179,8 @@
   },
   "dependencies": {
     "dayjs": "^1.11.7",
+    "patch-package": "^7.0.0",
+    "postinstall-postinstall": "^2.1.0",
     "react-native-draggable": "^3.3.0",
     "react-native-json-tree": "^1.3.0"
   }
