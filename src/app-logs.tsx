@@ -8,9 +8,9 @@ import {
   TextInput,
   View,
 } from 'react-native'
-import JSONTree from 'react-native-json-tree'
 
 import { Colors } from './constants'
+import JSONTree from './libs/react-native-json-tree'
 import { ActionButton } from './section-quick-actions'
 import styles from './styles'
 import { Log, LogLevel, QaMenuProps } from './types'

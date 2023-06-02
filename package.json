@@ -178,7 +178,8 @@
   },
   "dependencies": {
     "dayjs": "^1.11.7",
-    "react-native-draggable": "^3.3.0",
-    "react-native-json-tree": "^1.3.0"
+    "prop-types": "^15.8.1",
+    "react-base16-styling": "^0.9.1",
+    "react-native-draggable": "^3.3.0"
   }
 }
