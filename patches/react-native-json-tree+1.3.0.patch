@@ -1,0 +1,40 @@
+diff --git a/node_modules/react-native-json-tree/src/Nodes.js b/node_modules/react-native-json-tree/src/Nodes.js
+index 5f01f12..84b4de6 100644
+--- a/node_modules/react-native-json-tree/src/Nodes.js
++++ b/node_modules/react-native-json-tree/src/Nodes.js
+@@ -234,6 +234,7 @@ export class JSONNestedNode extends React.PureComponent {
+     nodeType: PropTypes.string.isRequired,
+     nodeTypeIndicator: PropTypes.any,
+     shouldExpandNode: PropTypes.func,
++    onNodeExpanded: PropTypes.func,
+     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
+     styling: PropTypes.func.isRequired,
+   }
+@@ -260,7 +261,14 @@ export class JSONNestedNode extends React.PureComponent {
+     }
+   }
+ 
+-  handlePress = () => this.setState({ expanded: !this.state.expanded })
++  handlePress = () => {
++    const { onNodeExpanded, keyPath, data, level } = this.props
++    const { expanded } = this.state
++    this.setState({ expanded: !expanded })
++    if (onNodeExpanded) {
++      onNodeExpanded(!expanded, keyPath, data, level)
++    }
++  }
+ 
+   render() {
+     const {
+diff --git a/node_modules/react-native-json-tree/src/types/index.d.ts b/node_modules/react-native-json-tree/src/types/index.d.ts
+index 1780dc4..020cdf8 100644
+--- a/node_modules/react-native-json-tree/src/types/index.d.ts
++++ b/node_modules/react-native-json-tree/src/types/index.d.ts
+@@ -22,6 +22,7 @@ declare module 'react-native-json-tree' {
+     postprocessValue?: (value: Renderable) => any;
+     sortObjectKeys?: boolean | ((a: Renderable, b: Renderable) => number);
+     shouldExpandNode?: (_keyName: any, _data: any, level: number) => boolean;
++    onNodeExpanded?: (expanded: boolean, keyPath: any, data: any, level: number) => void;
+     theme?: Theme;
+     valueRenderer?: (value: Renderable | undefined) => ReactNode;
+   }
