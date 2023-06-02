@@ -20,18 +20,20 @@ export const AppLogs: React.FC<
   Pick<FlatListProps<Log>, 'data' | 'onRefresh'> &
     Pick<QaMenuProps, 'styles' | 'errorColor' | 'warningColor'>
 > = ({
-  data,
+  data: logs,
   onRefresh,
   styles: propStyles = {},
   errorColor = Colors.error,
   warningColor = Colors.warning,
 }) => {
   const [searchText, setSearchText] = useState('')
+  const [paramsExpandingNodes, setParamsExpandingNodes] = useState<{ [id: string]: any }>({})
+  const [messageExpandingNodes, setMessageExpandingNodes] = useState<{ [id: string]: any }>({})
 
   const filteredLogs = useMemo(() => {
-    if (data && searchText.length) {
+    if (logs && searchText.length) {
       const lowercasedSearchText = searchText.toLowerCase()
-      return data.filter(({ message }) => {
+      return logs.filter(({ message }) => {
         if (typeof message === 'string') {
           return message.toLowerCase().includes(lowercasedSearchText)
         }
@@ -41,18 +43,66 @@ export const AppLogs: React.FC<
         return false
       })
     }
-    return data
-  }, [data, searchText])
+    return logs
+  }, [logs, searchText])
+
+  const shouldMessageExpandNode = useCallback(
+    (item: Log) => (keyPath: string[], data: unknown, level: number) => {
+      const expandingNode = messageExpandingNodes[item.id]
+      if (
+        expandingNode &&
+        JSON.stringify({ keyPath, data, level }) === JSON.stringify(expandingNode)
+      ) {
+        return expandingNode.expanded
+      }
+      return false
+    },
+    [messageExpandingNodes],
+  )
+
+  const shouldParamsExpandNode = useCallback(
+    (item: Log) => (keyPath: string[], data: unknown, level: number) => {
+      const expandingNode = paramsExpandingNodes[item.id]
+      if (
+        expandingNode &&
+        JSON.stringify({ keyPath, data, level }) === JSON.stringify(expandingNode)
+      ) {
+        return expandingNode.expanded
+      }
+      return false
+    },
+    [paramsExpandingNodes],
+  )
+
+  const onMessageNodeExpanded = useCallback(
+    (item: Log) => (expanded: boolean, keyPath: string[], data: unknown, level: number) => {
+      setMessageExpandingNodes(prev => ({
+        ...prev,
+        [item.id]: { keyPath, data, level, expanded },
+      }))
+    },
+    [],
+  )
+
+  const onParamsNodeExpanded = useCallback(
+    (item: Log) => (expanded: boolean, keyPath: string[], data: unknown, level: number) => {
+      setParamsExpandingNodes(prev => ({
+        ...prev,
+        [item.id]: { keyPath, data, level, expanded },
+      }))
+    },
+    [],
+  )
 
   const renderItem = useCallback(
     ({ item }: ListRenderItemInfo<Log>) => {
-      const { timestamp, level, message, optionalParams = {} } = item
-      let textColor = level === LogLevel.error ? Colors.white : Colors.black
+      const { timestamp, level: logLevel, message, optionalParams = {} } = item
+      let textColor = logLevel === LogLevel.error ? Colors.white : Colors.black
 
       let backgroundColor: ColorValue = Colors.white
-      if (level === LogLevel.warn) {
+      if (logLevel === LogLevel.warn) {
         backgroundColor = warningColor
-      } else if (level === LogLevel.error) {
+      } else if (logLevel === LogLevel.error) {
         backgroundColor = errorColor
       }
 
@@ -89,7 +139,7 @@ export const AppLogs: React.FC<
             <Text
               style={[styles.logItemTimestamp, propStyles.logTimestampStyle, { color: textColor }]}
             >
-              {`[${LogLevel[level].toUpperCase()}] `}
+              {`[${LogLevel[logLevel].toUpperCase()}] `}
               {timestamp.format('h:mm:ss.SSS A')}
             </Text>
             <ActionButton
@@ -107,14 +157,34 @@ export const AppLogs: React.FC<
           )}
           {typeof message === 'object' && (
             <View style={styles.logItemMessageData}>
-              <JSONTree data={message} hideRoot />
+              <JSONTree
+                hideRoot
+                data={message}
+                shouldExpandNode={shouldMessageExpandNode(item)}
+                onNodeExpanded={onMessageNodeExpanded(item)}
+              />
             </View>
           )}
-          {Object.keys(params).length > 0 && <JSONTree data={params} hideRoot />}
+          {Object.keys(params).length > 0 && (
+            <JSONTree
+              hideRoot
+              data={params}
+              shouldExpandNode={shouldParamsExpandNode(item)}
+              onNodeExpanded={onParamsNodeExpanded(item)}
+            />
+          )}
         </View>
       )
     },
-    [propStyles, errorColor, warningColor],
+    [
+      propStyles,
+      errorColor,
+      warningColor,
+      shouldMessageExpandNode,
+      shouldParamsExpandNode,
+      onMessageNodeExpanded,
+      onParamsNodeExpanded,
+    ],
   )
 
   return (
@@ -131,7 +201,7 @@ export const AppLogs: React.FC<
       />
       <FlatList
         refreshing={false}
-        keyExtractor={item => `${item.timestamp.valueOf()}_${Math.random()}`}
+        keyExtractor={item => item.id}
         data={filteredLogs}
         renderItem={renderItem}
         onRefresh={onRefresh}
