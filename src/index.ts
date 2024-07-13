@@ -1,4 +1,5 @@
 export * from './app-logs'
+export { TestIDs } from './constants'
 export * from './qa-menu'
 export * from './section-app-info'
 export * from './section-quick-actions'

@@ -8,15 +8,18 @@ import {
   View,
 } from 'react-native'
 
+import { TestIDs } from './constants'
 import styles from './styles'
 import type { QaMenuProps, QuickAction } from './types'
 
 export const ActionButton: React.FC<
   TouchableOpacityProps & { title?: string; titleStyle?: StyleProp<TextStyle> }
-> = ({ title, style, titleStyle, ...rest }) => {
+> = ({ testID, title, style, titleStyle, ...rest }) => {
   return (
-    <TouchableOpacity {...rest} style={[styles.actionButton, style]}>
-      <Text style={[styles.actionButtonTitle, titleStyle]}>{title}</Text>
+    <TouchableOpacity {...rest} testID={testID} style={[styles.actionButton, style]}>
+      <Text testID={`${testID}.title`} style={[styles.actionButtonTitle, titleStyle]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   )
 }
@@ -28,20 +31,27 @@ export const SectionQuickActions: React.FC<
   }
 > = ({ quickActions = [], onAppLogsView, closeModal, styles: propStyles = {} }) => {
   const onQuickActionPress = useCallback(
-    ({ onPress, closedOnPress = false }: QuickAction) => {
-      onPress()
-      if (closedOnPress) {
-        closeModal()
-      }
-    },
+    ({ onPress, closedOnPress = false }: QuickAction) =>
+      () => {
+        onPress()
+        if (closedOnPress) {
+          closeModal()
+        }
+      },
     [closeModal],
   )
 
   return (
-    <View style={styles.section}>
-      <Text style={[styles.sectionTitle, propStyles.sectionTitleStyle]}>{'Quick Actions'}</Text>
-      <View style={styles.sectionContent}>
+    <View testID={TestIDs.sections.quickAction} style={styles.section}>
+      <Text
+        testID={`${TestIDs.sections.quickAction}.title`}
+        style={[styles.sectionTitle, propStyles.sectionTitleStyle]}
+      >
+        {'Quick Actions'}
+      </Text>
+      <View testID={`${TestIDs.sections.quickAction}.content`} style={styles.sectionContent}>
         <ActionButton
+          testID={TestIDs.quickActionButtons.viewAppLog}
           title={'View app logs'}
           onPress={onAppLogsView}
           style={propStyles.quickActionButtonStyle}
@@ -50,9 +60,10 @@ export const SectionQuickActions: React.FC<
         {quickActions.map((action, index) => {
           return (
             <ActionButton
+              testID={action.testID}
               key={`action_button_${index}`}
               title={action.title}
-              onPress={() => onQuickActionPress(action)}
+              onPress={onQuickActionPress(action)}
               style={propStyles.quickActionButtonStyle}
               titleStyle={propStyles.quickActionButtonTitleStyle}
             />
