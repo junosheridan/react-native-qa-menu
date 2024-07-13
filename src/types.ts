@@ -28,11 +28,13 @@ export interface QuickAction {
   title: string
   onPress: () => void
   closedOnPress?: boolean
+  testID?: string
 }
 
 export interface AppInfo {
   title: string
   description: string
+  testID?: string
 }
 
 export interface QaMenuProps

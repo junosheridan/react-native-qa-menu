@@ -26,7 +26,7 @@ import { FileLogger } from 'react-native-file-logger'
 import Share, { ShareOptions } from 'react-native-share'
 
 import { AppLogs } from './app-logs'
-import { Colors, Images, MAXIMUM_LOGS_COUNT, Metrics } from './constants'
+import { Colors, Images, MAXIMUM_LOGS_COUNT, Metrics, TestIDs } from './constants'
 import { SectionAppInfo } from './section-app-info'
 import { SectionQuickActions } from './section-quick-actions'
 import { SectionStateTree } from './section-state-tree'
@@ -157,11 +157,12 @@ export const QaMenu = forwardRef(
       return (
         <KeyboardAvoidingView
           enabled
+          testID={TestIDs.keyboardAvoidingView}
           style={styles.keyboardAvoidingView}
           behavior={Metrics.isIphone ? 'padding' : 'height'}
           keyboardVerticalOffset={100}
         >
-          <ScrollView contentContainerStyle={styles.scrollContent}>
+          <ScrollView testID={TestIDs.scrollView} contentContainerStyle={styles.scrollContent}>
             <SectionAppInfo extraAppInfo={extraAppInfo} styles={propStyles} />
             <SectionStateTree state={state} styles={propStyles} />
             <SectionQuickActions
@@ -232,30 +233,62 @@ export const QaMenu = forwardRef(
           onShortPressRelease={openModal}
         />
         <Modal
+          testID={TestIDs.modal}
           animationType="slide"
           transparent={false}
           visible={modalVisible}
           onRequestClose={closeModal}
         >
-          <SafeAreaView style={styles.modalContent}>
+          <SafeAreaView testID={TestIDs.modalContent} style={styles.modalContent}>
             <View style={styles.header}>
               {viewState === ViewState.default ? (
                 <View />
               ) : (
-                <TouchableOpacity style={styles.headerMenuButton} onPress={setViewStateAsDefault}>
-                  <Image style={styles.icon} source={Images.goBack} resizeMode="contain" />
+                <TouchableOpacity
+                  testID={TestIDs.header.leftMenuItem}
+                  style={styles.headerMenuButton}
+                  onPress={setViewStateAsDefault}
+                >
+                  <Image
+                    testID={`${TestIDs.header.leftMenuItem}.icon`}
+                    style={styles.icon}
+                    source={Images.goBack}
+                    resizeMode="contain"
+                  />
                 </TouchableOpacity>
               )}
-              <Text style={[styles.headerTitle, propStyles.headerTitleStyle]} numberOfLines={1}>
+              <Text
+                testID={TestIDs.header.title}
+                style={[styles.headerTitle, propStyles.headerTitleStyle]}
+                numberOfLines={1}
+              >
                 {appName}
               </Text>
               {viewState === ViewState.default ? (
-                <TouchableOpacity style={styles.headerMenuButton} onPress={closeModal}>
-                  <Image style={styles.icon} source={Images.cancel} resizeMode="contain" />
+                <TouchableOpacity
+                  testID={TestIDs.header.rightMenuItem}
+                  style={styles.headerMenuButton}
+                  onPress={closeModal}
+                >
+                  <Image
+                    testID={`${TestIDs.header.rightMenuItem}.icon`}
+                    style={styles.icon}
+                    source={Images.cancel}
+                    resizeMode="contain"
+                  />
                 </TouchableOpacity>
               ) : (
-                <TouchableOpacity style={styles.headerMenuButton} onPress={shareLogFiles}>
-                  <Image style={styles.icon} source={Images.emailSend} resizeMode="contain" />
+                <TouchableOpacity
+                  testID={TestIDs.header.rightMenuItem}
+                  style={styles.headerMenuButton}
+                  onPress={shareLogFiles}
+                >
+                  <Image
+                    testID={`${TestIDs.header.rightMenuItem}.icon`}
+                    style={styles.icon}
+                    source={Images.emailSend}
+                    resizeMode="contain"
+                  />
                 </TouchableOpacity>
               )}
             </View>

@@ -53,4 +53,31 @@ export const Colors = {
   error: 'crimson',
 }
 
+export const TestIDs = {
+  modal: 'qa.menu.modal',
+  modalContent: 'qa.menu.modalContent',
+  keyboardAvoidingView: 'qa.menu.keyboardAvoidingView',
+  scrollView: 'qa.menu.scrollView',
+  header: {
+    title: 'qa.menu.header.title',
+    leftMenuItem: 'qa.menu.header.leftMenuItem',
+    rightMenuItem: 'qa.menu.header.rightMenuItem',
+  },
+  quickActionButtons: {
+    viewAppLog: 'qa.menu.action.viewAppLog',
+  },
+  sections: {
+    appInfo: 'qa.menu.sections.appInfo',
+    stateTree: 'qa.menu.sections.stateTree',
+    quickAction: 'qa.menu.sections.quickAction',
+  },
+  appInfo: {
+    deviceId: 'qa.menu.info.deviceId',
+    bundleId: 'qa.menu.info.bundleId',
+    buildNumber: 'qa.menu.info.buildNumber',
+    osVersion: 'qa.menu.info.osVersion',
+    appVersion: 'qa.menu.info.appVersion',
+  },
+}
+
 export const MAXIMUM_LOGS_COUNT = 100
