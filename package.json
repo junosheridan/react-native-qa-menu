@@ -1,6 +1,6 @@
 {
   "name": "react-native-qa-menu",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Helper menu for QAs to examine the apps during the development",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
