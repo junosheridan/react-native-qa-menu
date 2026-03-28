@@ -1,5 +1,9 @@
 # react-native-qa-menu
 
+> **⚠️ Deprecated**
+>
+> This library is no longer maintained. Please use [**react-native-backstage**](https://github.com/junocs/react-native-backstage) instead — it is a complete rewrite with zero dependencies, a modern API, and full TypeScript support.
+
 Helper menu for QAs to examine the apps during the development
 
 <img src="./demo.gif" />
